@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Generate and customize QR codes easily with our tool. Supports text, URLs, and more for instant sharing." />
+  <title>QR Code Generator - TheQRIFY</title>
+
+
+  <!-- Favicon - Multiple formats for better compatibility -->
+  <!-- ⚠️ IMPORTANT: Only use SQUARE icons for favicons! -->
+  <!-- qrify-logo.png is RECTANGULAR (1087x498) - DO NOT use it here! -->
+  <link rel="icon" href="/icon-48.png" type="image/png" sizes="48x48">
+  <link rel="icon" href="/icon-64.png" type="image/png" sizes="64x64">
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="QR Code Generator - TheQRIFY" />
+  <meta property="og:description" content="Generate and customize QR codes easily with our tool." />
+  <meta property="og:image" content="https://theqrify.com/icon-512.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content="TheQRIFY Logo" />
+  <meta property="og:url" content="https://theqrify.com" />
+  <meta property="og:site_name" content="TheQRIFY" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="QR Code Generator - TheQRIFY" />
+  <meta name="twitter:description" content="Generate and customize QR codes easily with our tool." />
+  <meta name="twitter:image" content="https://theqrify.com/icon-512.png" />
+  <meta name="twitter:image:alt" content="TheQRIFY Logo" />
+
+  <!-- Google Search Logo & Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TheQRIFY",
+      "alternateName": "TheQrify",
+      "url": "https://theqrify.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://theqrify.com/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Generate and customize QR codes easily with our tool. Supports text, URLs, and more for instant sharing.",
+      "sameAs": [
+        "https://www.youtube.com/@TheQrifty"
+      ]
+    }
+    </script>
+
+
+
+  <!-- <meta property="og:url" content="https://theqrify.com" /> -->
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- ✅ Fonts (optimized loading) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- <link rel="preload" href="/assets/index-D7Ldze5v.css" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" as="style"
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  </noscript>
+  <!-- <link rel="preload" href="/assets/index-Cwyly-KD.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/assets/index-Cwyly-KD.css">
+  </noscript> -->
+
+  <!-- ✅ Preconnect for faster CDN -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+  <!-- ✅ Non-blocking App CSS -->
+  <link rel="preload" href="/assets/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet" href="/assets/index.css" />
+  </noscript>
+
+  <!-- Google tag (gtag.js) -->
+  <!-- <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-SXM06X9478"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-SXM06X9478", { debug_mode: true });
+    </script> -->
+  <!-- <script>
+      let gaLoaded = false;
+
+      function loadGA() {
+        if (gaLoaded) return;
+        gaLoaded = true;
+
+        const script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-SXM06X9478";
+        script.async = true;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+
+        gtag("js", new Date());
+        gtag("config", "G-SXM06X9478");
+      }
+
+      ["click", "scroll", "mousemove", "touchstart"].forEach((event) => {
+        window.addEventListener(event, loadGA, { once: true });
+      });
+    </script> -->
+
+  <!-- ✅ Non-blocking Bootstrap CSS -->
+  <!-- <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  </noscript> -->
+
+  <!-- <link rel="preload" href="assets/bootstrap.css" as="style" onload="this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="assets/bootstrap.css">
+  </noscript> -->
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Bootstrap -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+  <!-- ✅ React entry -->
+  <script type="module" src="/src/main.jsx" defer></script>
+
+  <!-- ✅ Bootstrap JS (deferred, not render-blocking) -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity=""
+    crossorigin="anonymous" defer></script>
+</body>
+<!-- <script>
+  window.addEventListener("load", function () {
+    var s = document.createElement("script");
+    s.src = "bootstrap.bundle.min.js";
+    document.body.appendChild(s);
+  });
+</script> -->
+
+</html>
