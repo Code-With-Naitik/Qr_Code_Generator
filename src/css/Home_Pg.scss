@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary: #015f9e;
 $accent: #0d6efd;
 $muted-bg: #f9f9f9;
@@ -530,14 +532,49 @@ ol {
   gap: 20px !important;
 }
 
-.nnnn1 Button {
-  padding: 10px;
-  margin-left: 10px;
-  width: 45%;
+.nnnn1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+  padding: 0 10px;
+
+  .btn {
+    flex: 1;
+    min-width: 140px;
+    max-width: 180px;
+    padding: 12px 15px !important;
+    margin: 0 !important;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 50px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(1, 95, 158, 0.15);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(1, 95, 158, 0.25);
+      background-color: $primary !important;
+      color: #fff !important;
+    }
+
+    &.primary-action {
+      background-color: $primary !important;
+      color: #fff !important;
+      
+      &:hover {
+        background-color: color.adjust($primary, $lightness: -10%) !important;
+      }
+    }
+  }
 }
 
 .nnnn2 {
-  margin: 20px;
+  margin: 0;
 }
 
 .Dw_Icon {

@@ -1,0 +1,468 @@
+/* ============================================================
+   QRifier – Premium QR-code Loader
+   ============================================================ */
+
+/* ── Google Font ── */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap");
+
+/* ── Base overlay ── */
+.qrl-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 30%, #0a1628 0%, #030810 100%);
+  font-family: "Outfit", sans-serif;
+  overflow: hidden;
+}
+
+/* ────────────────────────────────────────
+   Floating particles
+──────────────────────────────────────── */
+.qrl-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.qrl-particle {
+  position: absolute;
+  width: calc(4px + var(--i, 0) * 1.5px);
+  height: calc(4px + var(--i, 0) * 1.5px);
+  border-radius: 2px;
+  background: hsl(calc(200 + var(--i, 0) * 12), 90%, 65%);
+  opacity: 0;
+  left: calc(var(--i, 0) * 5.8%);
+  bottom: -20px;
+  animation: qrl-rise calc(4s + var(--i, 0) * 0.35s) calc(var(--i, 0) * 0.22s) ease-in-out infinite;
+}
+
+@keyframes qrl-rise {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────
+   Glass card
+──────────────────────────────────────── */
+.qrl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 44px 52px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(99, 179, 237, 0.18);
+  box-shadow:
+    0 0 60px rgba(30, 110, 210, 0.2),
+    0 0 120px rgba(30, 60, 180, 0.12),
+    inset 0 0 40px rgba(30, 80, 200, 0.04);
+  backdrop-filter: blur(18px);
+  animation: qrl-card-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* shimmer sweep */
+.qrl-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: linear-gradient(115deg,
+      transparent 35%,
+      rgba(120, 200, 255, 0.06) 50%,
+      transparent 65%);
+  background-size: 200% 100%;
+  animation: qrl-shimmer 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes qrl-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes qrl-card-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ────────────────────────────────────────
+   QR pixel grid (7 × 7)
+──────────────────────────────────────── */
+.qrl-qr-grid {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  border-radius: 20px;
+  background: rgba(10, 22, 40, 0.6);
+  border: 1.5px solid rgba(99, 179, 237, 0.25);
+  box-shadow: 0 0 24px rgba(30, 100, 220, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Actual logo image */
+.qrl-logo-img {
+  width: 130px;
+  /* Slightly reduced for integer pixel alignment */
+  height: 130px;
+  object-fit: contain;
+  border-radius: 12px;
+  filter: drop-shadow(0 0 8px rgba(30, 111, 224, 0.4));
+
+  /* 🧊 Sharpness & Performance */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  /* Hardware layer */
+  backface-visibility: hidden;
+
+  animation: qrl-logo-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes qrl-logo-pulse {
+
+  0%,
+  100% {
+    transform: translateZ(0) scale(1);
+    filter: drop-shadow(0 0 6px rgba(30, 111, 224, 0.4));
+  }
+
+  50% {
+    transform: translateZ(0) scale(1.04);
+    filter: drop-shadow(0 0 16px rgba(91, 245, 255, 0.6));
+  }
+}
+
+/* laser scan beam */
+.qrl-scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #5bf5ff, #7ecfff, #5bf5ff, transparent);
+  box-shadow: 0 0 16px #5bf5ff, 0 0 32px rgba(91, 245, 255, 0.5);
+  animation: qrl-scan 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes qrl-scan {
+  0% {
+    top: 10px;
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    top: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────
+   Brand logo text
+──────────────────────────────────────── */
+.qrl-brand {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.qrl-brand-q {
+  background: linear-gradient(135deg, #5bf5ff, #1e6fe0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.qrl-brand-rest {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ────────────────────────────────────────
+   Animated message
+──────────────────────────────────────── */
+.qrl-message {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(180, 215, 255, 0.85);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  animation: qrl-msg-in 0.4s ease both;
+}
+
+@keyframes qrl-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ────────────────────────────────────────
+   Progress bar
+──────────────────────────────────────── */
+.qrl-progress-track {
+  position: relative;
+  width: 220px;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: visible;
+}
+
+.qrl-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #1e6fe0, #5bf5ff);
+  box-shadow: 0 0 10px #5bf5ff, 0 0 20px rgba(91, 245, 255, 0.4);
+  transition: width 0.03s linear;
+  position: relative;
+}
+
+/* glowing head dot */
+.qrl-progress-fill::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px #5bf5ff, 0 0 20px rgba(91, 245, 255, 0.8);
+}
+
+.qrl-progress-pct {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(126, 207, 255, 0.9);
+}
+
+/* ────────────────────────────────────────
+   Bouncing dots
+──────────────────────────────────────── */
+.qrl-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.qrl-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e6fe0, #5bf5ff);
+  box-shadow: 0 0 8px rgba(91, 245, 255, 0.5);
+  animation: qrl-bounce 1.2s ease-in-out infinite;
+}
+
+.qrl-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.qrl-dots span:nth-child(3) {
+  animation-delay: 0.30s;
+}
+
+@keyframes qrl-bounce {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+
+  40% {
+    transform: scale(1.3) translateY(-10px);
+    box-shadow: 0 0 16px rgba(91, 245, 255, 0.8);
+  }
+}
+
+/* ────────────────────────────────────────
+   Responsive
+──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .qrl-card {
+    padding: 32px 28px;
+    gap: 16px;
+  }
+
+  .qrl-qr-grid {
+    width: 130px;
+    height: 130px;
+  }
+
+  .qrl-logo-img {
+    width: 106px;
+    height: 106px;
+  }
+
+  .qrl-progress-track {
+    width: 170px;
+  }
+}
+
+/* ────────────────────────────────────────
+   Done state — progress fill turns green
+──────────────────────────────────────── */
+.qrl-fill-done {
+  background: linear-gradient(90deg, #00c853, #69f0ae) !important;
+  box-shadow: 0 0 14px #00e676, 0 0 28px rgba(0, 230, 118, 0.5) !important;
+  transition: width 0.25s ease, background 0.4s ease !important;
+}
+
+.qrl-fill-done::after {
+  background: #fff;
+  box-shadow: 0 0 10px #69f0ae, 0 0 24px rgba(105, 240, 174, 0.9) !important;
+}
+
+/* logo image stops pulsing, glows green */
+.qrl-logo-done {
+  animation: none !important;
+  transform: translateZ(0) scale(1.05) !important;
+  filter: drop-shadow(0 0 16px rgba(0, 230, 118, 0.8)) !important;
+  transition: all 0.4s ease;
+}
+
+/* card border flashes green when done */
+.qrl-done {
+  border-color: rgba(0, 230, 118, 0.5) !important;
+  box-shadow:
+    0 0 60px rgba(0, 200, 80, 0.25),
+    0 0 120px rgba(0, 180, 60, 0.15),
+    inset 0 0 40px rgba(0, 200, 80, 0.06) !important;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* ────────────────────────────────────────
+   Checkmark overlay
+──────────────────────────────────────── */
+.qrl-check-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 20, 10, 0.55);
+  border-radius: 18px;
+  animation: qrl-check-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes qrl-check-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.qrl-check-svg {
+  width: 64px;
+  height: 64px;
+}
+
+.qrl-check-circle {
+  stroke: #00e676;
+  stroke-width: 2.5;
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  animation: qrl-circle-draw 0.3s ease forwards 0.05s;
+}
+
+@keyframes qrl-circle-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.qrl-check-mark {
+  stroke: #00e676;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: qrl-check-draw 0.25s ease forwards 0.3s;
+  filter: drop-shadow(0 0 6px #00e676);
+}
+
+@keyframes qrl-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ────────────────────────────────────────
+   Exit / fade-out (whole overlay)
+──────────────────────────────────────── */
+.qrl-exit {
+  animation: qrl-overlay-out 0.3s ease forwards !important;
+  pointer-events: none;
+}
+
+@keyframes qrl-overlay-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}

@@ -3,14 +3,16 @@ import { QRCodeSVG } from "qrcode.react";
 import { useAdmin } from "./AdminContext";
 import "./admin.css";
 
-const QR_TYPES = ["URL", "WiFi", "vCard", "SMS", "Email", "Social", "Location", "App", "Text", "Phone"];
+const QR_TYPES = ["URL", "WiFi", "vCard", "SMS", "Email", "Social", "Location", "App", "Text", "Phone", "WhatsApp"];
 const TYPE_COLORS = {
     URL: "#6366f1", WiFi: "#22c55e", vCard: "#f59e0b", SMS: "#3b82f6",
     Email: "#ec4899", Social: "#8b5cf6", Location: "#ef4444", App: "#14b8a6", Text: "#64748b", Phone: "#f97316",
+    WhatsApp: "#25d366",
 };
 const TYPE_ICONS = {
     URL: "🌐", WiFi: "📶", vCard: "👤", SMS: "💬", Email: "📧",
     Social: "📱", Location: "📍", App: "📦", Text: "📝", Phone: "📞",
+    WhatsApp: "💬",
 };
 
 const ITEMS_PER_PAGE = 6;

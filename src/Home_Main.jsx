@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 // import "./backend/css/Navbar.scss"
 import "./css/PlansAndPayments.scss";

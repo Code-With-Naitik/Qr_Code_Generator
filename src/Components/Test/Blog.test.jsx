@@ -46,10 +46,10 @@ describe("Blog Page", () => {
             </MemoryRouter>
         );
 
-        const nextButton = screen.getByText("Next");
+        const nextButton = screen.getByLabelText("Next");
         fireEvent.click(nextButton);
 
-        const page2Button = screen.getByRole("button", { name: "2" });
+        const page2Button = screen.getByRole("button", { name: "Page 2" });
         expect(page2Button.closest(".page-item")).toHaveClass("active");
     });
 

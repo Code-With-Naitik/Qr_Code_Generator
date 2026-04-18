@@ -1,8 +1,7 @@
-import React from "react";
-import { useState, useRef } from "react";
-import QRCode from "react-qr-code";    //08-01--working// 
+import React, { useState, useRef } from "react";
+import { useAdmin } from "../admin/AdminContext.jsx";
 import { QRCodeSVG } from "qrcode.react";   //08-01//
-import * as htmlToImage from "html-to-image";    //09-01//
+// import "../css/PlansAndPayments.scss";
 
 
 // import React from "react";
@@ -24,7 +23,7 @@ import step3 from "../assets/step3.webp";
 // import thinking from "../assets/thinking.png"
 // import img2 from "../assets/Google.png";
 import { TfiWorld } from "react-icons/tfi";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaUtensils, FaBullhorn, FaGraduationCap, FaTicketAlt } from "react-icons/fa";
 // FaRegImage
 // import { FaRegFilePdf } from "react-icons/fa";
 // import { FaArrowRight } from "react-icons/fa";
@@ -35,6 +34,7 @@ import { FaWifi } from "react-icons/fa";
 // import { FaMusic } from "react-icons/fa";
 import { RiUserAddLine } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
+import ExploreAllGenerators from "./ExploreAllGenerators";
 // import { MdBlockFlipped } from "react-icons/md";
 // MdVideoLibrary
 // import { FaChevronDown } from "react-icons/fa";
@@ -79,7 +79,7 @@ import img_11 from "../assets/img11.webp";
 import { Link, QrCode, Whatsapp } from "react-bootstrap-icons";
 // import { useSearchParams } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
-import { BsChatDotsFill } from "react-icons/bs";
+import { BsChatDotsFill, BsGlobe, BsPersonFill, BsWifi, BsWhatsapp, BsEnvelopeFill, BsChatLeftTextFill, BsType, BsCpu, BsShieldLock, BsGrid3X3, BsQrCodeScan, BsLightningChargeFill, BsGraphUpArrow, BsCreditCardFill, BsRecycle, BsShieldLockFill, BsBarChartFill, BsPaletteFill, BsPhoneFill, BsBagFill, BsBriefcaseFill } from "react-icons/bs";
 // import { RxValueNone } from "react-icons/rx";
 // import { SiWhatsapp } from "react-icons/si";
 // import { RiLink } from "react-icons/ri";
@@ -93,15 +93,15 @@ import { BsChatDotsFill } from "react-icons/bs";
 // import { FaBitcoin } from "react-icons/fa";
 // import { MdOutlineHideSource } from "react-icons/md";
 import null_1 from "../assets/null1.webp";
-import frame_1 from "../assets/frame_1.png";
-import frame_2 from "../assets/frame_2.png";
-import frame_3 from "../assets/frame_3.png";
-import frame_4 from "../assets/frame_4.png";
-import frame_5 from "../assets/frame_5.png";
-import frame_6 from "../assets/frame_6.png";
-import frame_7 from "../assets/frame_7.png";
-import logo1 from "../assets/logo.png";
-import { HiOutlineDownload, HiOutlineShare } from "react-icons/hi";
+import frame_1 from "../assets/frame_1.webp";
+import frame_2 from "../assets/frame_2.webp";
+import frame_3 from "../assets/frame_3.webp";
+import frame_4 from "../assets/frame_4.webp";
+import frame_5 from "../assets/frame_5.webp";
+import frame_6 from "../assets/frame_6.webp";
+import frame_7 from "../assets/frame_7.webp";
+import logo1 from "../assets/logo.webp";
+import { HiOutlineDownload, HiOutlineShare, HiOutlineExternalLink } from "react-icons/hi";
 
 // import QR_1 from "../assets/QR_1.webp";
 // import Text_QR from "../assets/Text_QR.png";
@@ -111,21 +111,20 @@ import { HiOutlineDownload, HiOutlineShare } from "react-icons/hi";
 // import Whatsapp_QR from "../assets/Whatsapp_QR.png";
 // import SMS_QR from "../assets/SMS_QR.png";
 
-import QR_1 from "../assets/QR_MAin.png";
-import Text_QR from "../assets/QR_MAin.png";
-import Email_QR from "../assets/QR_MAin.png";
-import VCard_QR from "../assets/QR_MAin.png";
-import WIFI_QR from "../assets/QR_MAin.png";
-import Whatsapp_QR from "../assets/QR_MAin.png";
-import SMS_QR from "../assets/QR_MAin.png";
+import QR_1 from "../assets/QR_MAin.webp";
+import Text_QR from "../assets/QR_MAin.webp";
+import Email_QR from "../assets/QR_MAin.webp";
+import VCard_QR from "../assets/QR_MAin.webp";
+import WIFI_QR from "../assets/QR_MAin.webp";
+import Whatsapp_QR from "../assets/QR_MAin.webp";
+import SMS_QR from "../assets/QR_MAin.webp";
 import { sendEvent } from "../appEvents";
-import { useAdmin } from "../admin/AdminContext";
 
 // const [qrImages1, setQrImages1] = useState({});
 
 // const [activeTab, setActiveTab] = useState("wedding");
 const QRGenerator = () => {
-  const { addQrCode } = useAdmin();
+  const { isLoggedIn, addQrCode } = useAdmin();
   const [activeTab, setActiveTab] = useState("website"),
     [showTypeModal, setShowTypeModal] = useState(!1),
     [showContact, setShowContact] = useState(!1),
@@ -150,9 +149,9 @@ const QRGenerator = () => {
     [body, setBody] = useState(""),
     [ssid, setSsid] = useState(""),
     [password, setPassword] = useState(""),
-    [hidden, setHidden] = useState(""),
-    [loading, setLoading] = useState(false),
-    [urlError, setUrlError] = useState("");
+    [encryption, setEncryption] = useState("WPA"),
+    [hidden, setHidden] = useState(false),
+    [loading, setLoading] = useState(false);
 
   // 09-01//
   const qrRef = useRef(null);
@@ -169,15 +168,6 @@ const QRGenerator = () => {
 
   // const URL = "https://qrcodegen-e4bccbhbd7edh9bp.centralindia-01.azurewebsites.net";
 
-  // Validates that a URL starts with http:// or https://
-  const validateWebsiteUrl = (url) => {
-    const trimmed = url.trim();
-    if (!trimmed) return "URL is required.";
-    if (!/^https?:\/\//i.test(trimmed))
-      return "URL must start with http:// or https://";
-    return "";
-  };
-
   const tabContent = {
     website: (
       <>
@@ -187,47 +177,22 @@ const QRGenerator = () => {
               <h4 className="fw-bold">Complete the content</h4>
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted text-start no-delay">
+              <label htmlFor="websiteInput" className="text-muted text-start no-delay fw-bold">
                 Enter your website URL
-              </b>
+              </label>
             </div>
             <div className="col-md-12">
               <input
-                type="text"
-                placeholder="https://example.com"
-                className={`custom-input${urlError ? " is-invalid" : website && !urlError ? " is-valid" : ""}`}
+                id="websiteInput"
+                type="url"
+                placeholder="https://theqrify.com/"
+                pattern="^https?://.*"
+                title="URL must start with http:// or https://"
+                className="custom-input"
                 value={website}
-                onChange={(e) => {
-                  setWebsite(e.target.value);
-                  setUrlError(validateWebsiteUrl(e.target.value));
-                }}
+                onChange={(e) => setWebsite(e.target.value)}
                 required
               />
-              {urlError && (
-                <div
-                  style={{
-                    color: "#dc3545",
-                    fontSize: "0.85rem",
-                    marginTop: "4px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  <span>⚠️</span> {urlError}
-                </div>
-              )}
-              {!urlError && website && (
-                <div
-                  style={{
-                    color: "#198754",
-                    fontSize: "0.85rem",
-                    marginTop: "4px",
-                  }}
-                >
-                  ✅ Valid URL
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -242,12 +207,13 @@ const QRGenerator = () => {
             </div>
 
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">
+              <label htmlFor="textContentInput" className="text-muted no-delay fw-bold">
                 Type any text you want to encode into a QR code.
-              </b>
+              </label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="textContentInput"
                 as="textarea"
                 rows={3}
                 className="custom-input"
@@ -301,10 +267,8 @@ const QRGenerator = () => {
               {/* Name and Surname */}
               <Row className="mb-3">
                 <Col>
-                  <Form.Group className="py-2">
-                    <b className="text-muted mb-2">Name *</b>
-                  </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="fnameInput" className="py-2">
+                    <Form.Label className="text-muted mb-2 fw-bold">Name *</Form.Label>
                     <Form.Control
                       type="text"
                       className="custom-input"
@@ -314,10 +278,8 @@ const QRGenerator = () => {
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Form.Group className="py-2">
-                    <b className="text-muted">Surname</b>
-                  </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="lnameInput" className="py-2">
+                    <Form.Label className="text-muted fw-bold">Surname</Form.Label>
                     <Form.Control
                       type="text"
                       className="custom-input"
@@ -341,10 +303,8 @@ const QRGenerator = () => {
 
               <Collapse in={showContact}>
                 <div id="contact-info" className="border p-3 mb-3 rounded">
-                  <Form.Group className="py-2">
-                    <b className="text-muted">Phone</b>
-                  </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="phone1Input" className="py-2">
+                    <Form.Label className="text-muted fw-bold">Phone</Form.Label>
                     <Form.Control
                       type="tel"
                       placeholder="E.g. +123456789"
@@ -353,10 +313,8 @@ const QRGenerator = () => {
                       onChange={(e) => setPhone1(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group className="py-2">
-                    <b className="text-muted">Email</b>
-                  </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="emailInput" className="py-2">
+                    <Form.Label className="text-muted fw-bold">Email</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="E.g. name@email.com"
@@ -365,10 +323,8 @@ const QRGenerator = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group className="py-2">
-                    <b className="text-muted">Personal website</b>
-                  </Form.Group>
-                  <Form.Group>
+                  <Form.Group controlId="pWebsiteInput" className="py-2">
+                    <Form.Label className="text-muted fw-bold">Personal website</Form.Label>
                     <Form.Control
                       type="url"
                       placeholder="https://..."
@@ -408,10 +364,12 @@ const QRGenerator = () => {
                   <Row className="g-2 mb-3">
                     <Col xs={12} md>
                       <Form.Control
+                        id="addressVcardInput"
                         placeholder="Search address"
                         className="custom-input"
                         value={addressVcard}
                         onChange={(e) => setAddressVcard(e.target.value)}
+                        aria-label="Search address"
                       />
                     </Col>
                     <Col xs={12} md="auto">
@@ -441,10 +399,8 @@ const QRGenerator = () => {
                 <div id="company-info" className="border p-3 rounded">
                   <Row>
                     <Col>
-                      <Form.Group className="py-2">
-                        <b className="text-muted">Company</b>
-                      </Form.Group>
-                      <Form.Group>
+                      <Form.Group controlId="cpyNameInput" className="py-2">
+                        <Form.Label className="text-muted fw-bold">Company</Form.Label>
                         <Form.Control
                           placeholder="E.g. Company LLC"
                           className="custom-input"
@@ -454,10 +410,8 @@ const QRGenerator = () => {
                       </Form.Group>
                     </Col>
                     <Col>
-                      <Form.Group className="py-2">
-                        <b className="text-muted">Title</b>
-                      </Form.Group>
-                      <Form.Group>
+                      <Form.Group controlId="pTitleVcardInput" className="py-2">
+                        <Form.Label className="text-muted fw-bold">Title</Form.Label>
                         <Form.Control
                           placeholder="E.g. Your profession/position"
                           className="custom-input"
@@ -483,10 +437,11 @@ const QRGenerator = () => {
               <h4 className="fw-bold mb-3">Complete the content</h4>
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Number</b>
+              <label htmlFor="whatsappPhoneInput" className="text-muted no-delay fw-bold">Number</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="whatsappPhoneInput"
                 as="textarea"
                 rows={1}
                 placeholder="Enter your text here"
@@ -498,10 +453,11 @@ const QRGenerator = () => {
               />
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Message</b>
+              <label htmlFor="whatsappMessageInput" className="text-muted no-delay fw-bold">Message</label>
             </div>
             <div className="col-12">
               <Form.Control
+                id="whatsappMessageInput"
                 as="textarea"
                 rows={3}
                 placeholder="Enter your text here"
@@ -521,10 +477,11 @@ const QRGenerator = () => {
               <h4 className="fw-bold mb-3">Complete the content</h4>
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Email</b>
+              <label htmlFor="emailAddressInput" className="text-muted no-delay fw-bold">Email</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="emailAddressInput"
                 as="textarea"
                 rows={1}
                 placeholder="Enter your text here"
@@ -534,10 +491,11 @@ const QRGenerator = () => {
               />
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Subject</b>
+              <label htmlFor="emailSubjectInput" className="text-muted no-delay fw-bold">Subject</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="emailSubjectInput"
                 as="textarea"
                 rows={1}
                 placeholder="Enter your text here"
@@ -547,10 +505,11 @@ const QRGenerator = () => {
               />
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Message</b>
+              <label htmlFor="emailBodyInput" className="text-muted no-delay fw-bold">Message</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="emailBodyInput"
                 as="textarea"
                 rows={3}
                 placeholder="Enter your text here"
@@ -571,10 +530,11 @@ const QRGenerator = () => {
               <h4 className="fw-bold mb-3">Complete the content</h4>
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted text-start no-delay">Number</b>
+              <label htmlFor="smsPhoneInput" className="text-muted text-start no-delay fw-bold">Number</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="smsPhoneInput"
                 as="textarea"
                 rows={1}
                 placeholder="Enter your number here"
@@ -586,10 +546,11 @@ const QRGenerator = () => {
               />
             </div>
             <div className="col-md-12 py-2">
-              <b className="text-muted no-delay">Message</b>
+              <label htmlFor="smsMessageInput" className="text-muted no-delay fw-bold">Message</label>
             </div>
             <div className="col-md-12">
               <Form.Control
+                id="smsMessageInput"
                 as="textarea"
                 rows={3}
                 placeholder="Enter your text here"
@@ -648,76 +609,86 @@ const QRGenerator = () => {
     // ),
     wifi: (
       <>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h4 className="fw-bold mb-1">Complete the content</h4>
-            </div>
-
-            <div className="row g-3 align-items-center">
-              <div className="col-md-4 col-sm-6">
-                <label className="form-label fw-bold text-muted">
-                  Network name (SSID)*
-                </label>
-                <input
-                  type="text"
-                  placeholder="E.g. HomeWifi"
-                  className="custom-input"
-                  required
-                  value={ssid}
-                  onChange={(e) => setSsid(e.target.value)}
-                />
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <h4 className="fw-bold mb-1">Complete the content</h4>
               </div>
 
-              <div className="col-md-4">
-                <label className="form-label fw-bold text-muted">
-                  Network password
-                </label>
-                <input
-                  type="text"
-                  placeholder="E.g. Mypassword"
-                  className="custom-input"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="row g-2 align-items-center">
-              <div className="col-md-4 col-sm-6">
-                <label className="form-label fw-bold text-muted">
-                  Security
-                </label>
-                <select className="custom-input">
-                  <option value="wep">WEP</option>
-                  <option value="wpa">WPA</option>
-                  <option value="wpa2-eap">WPA2-EAP</option>
-                  <option value="nopass">No Password</option>
-                </select>
-              </div>
-
-              <div className="col-md-4 col-sm-6">
-                <div className="form-check d-flex align-items-center mt-4">
-                  <input
-                    type="checkbox"
-                    id="hiddenNetwork"
-                    style={{ width: "20px", height: "20px" }}
-                    className="form-check-input me-2"
-                    checked={hidden}
-                    onChange={(e) => setHidden(e.target.checked)}
-                  />
-                  <label
-                    htmlFor="hiddenNetwork"
-                    className="form-check-label fw-bold text-muted"
-                  >
-                    Hidden Network
+              <div className="row g-3 align-items-center">
+                <div className="col-md-4 col-sm-6">
+                  <label htmlFor="wifiSsidInput" className="form-label fw-bold text-muted">
+                    Network name (SSID)*
                   </label>
+                  <input
+                    id="wifiSsidInput"
+                    type="text"
+                    placeholder="E.g. HomeWifi"
+                    className="custom-input"
+                    autoComplete="username"
+                    required
+                    value={ssid}
+                    onChange={(e) => setSsid(e.target.value)}
+                  />
+                </div>
+
+                <div className="col-md-4">
+                  <label htmlFor="wifiPasswordInput" className="form-label fw-bold text-muted">
+                    Network password
+                  </label>
+                  <input
+                    id="wifiPasswordInput"
+                    type="password"
+                    placeholder="E.g. Mypassword"
+                    className="custom-input"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row g-2 align-items-center">
+                <div className="col-md-4 col-sm-6">
+                  <label htmlFor="wifiSecuritySelect" className="form-label fw-bold text-muted">
+                    Security
+                  </label>
+                  <select
+                    id="wifiSecuritySelect"
+                    className="custom-input"
+                    value={encryption}
+                    onChange={(e) => setEncryption(e.target.value)}
+                  >
+                    <option value="WPA">WPA/WPA2</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">None</option>
+                  </select>
+                </div>
+
+                <div className="col-md-4 col-sm-6">
+                  <div className="form-check d-flex align-items-center mt-4">
+                    <input
+                      type="checkbox"
+                      id="hiddenNetwork"
+                      style={{ width: "20px", height: "20px" }}
+                      className="form-check-input me-2"
+                      checked={hidden}
+                      onChange={(e) => setHidden(e.target.checked)}
+                    />
+                    <label
+                      htmlFor="hiddenNetwork"
+                      className="form-check-label fw-bold text-muted"
+                    >
+                      Hidden Network
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
         {/* <Form.Control type="url" placeholder="Video URL" /> */}
       </>
     ),
@@ -1005,8 +976,10 @@ const QRGenerator = () => {
         // return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
         return `https://wa.me/${phone2}?text=${encodeURIComponent(message2)}`;
 
-      case "wifi":
-        return `WIFI:T:WPA;S:${ssid};P:${password};;`;
+      case "wifi": {
+        const enc = encryption === 'nopass' ? 'nopass' : encryption;
+        return `WIFI:S:${ssid};T:${enc};P:${password};H:${hidden ? 'true' : 'false'};;`;
+      }
 
       case "vcard":
         return `BEGIN:VCARD\nVERSION:3.0\nFN:${fname} ${lname}\nTEL:${phone1}\nEMAIL:${email}\nURL:${pWebsite}\nORG:${cpyName}\nTITLE:${pTitleVcard}\nADR:${addressVcard}\nEND:VCARD`;
@@ -1065,6 +1038,8 @@ const QRGenerator = () => {
 
     try {
       console.log("Converting QR to PNG...");
+      // Dynamic import to reduce initial bundle size
+      const htmlToImage = await import("html-to-image");
       // Convert QR code to PNG with enhanced options
       const dataUrl = await htmlToImage.toPng(qrRef.current, {
         skipFonts: true,
@@ -1127,6 +1102,101 @@ const QRGenerator = () => {
       console.error("Error details:", error.message, error.stack);
       alert("Failed to share QR code. Error: " + error.message);
     }
+  };
+
+  const handleOpenLink = () => {
+    const liveValue = getQRValue();
+    if (!liveValue) {
+      alert("Please fill in the content first!");
+      return;
+    }
+
+    let url = liveValue;
+
+    // Special handling for vCard (download .vcf file)
+    if (activeTab === "vcard") {
+      const blob = new Blob([liveValue], { type: "text/vcard" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${fname || "contact"}.vcf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      sendEvent("qr_open_vcard", {
+        event_category: "QR",
+        event_label: "vCard File Downloaded",
+      });
+      return;
+    }
+
+    // Special handling for WiFi (Attempting direct protocol trigger as requested)
+    if (activeTab === "wifi") {
+      if (password) {
+        navigator.clipboard.writeText(password);
+      }
+      // Attempting to trigger the WIFI protocol directly. 
+      // Most browsers will ignore this for security, but we attempt it for specialized handlers.
+      window.location.href = liveValue;
+      return;
+    }
+
+    // Special handling for Email (Avoiding blank tab and ensuring client opens)
+    if (activeTab === "email") {
+      // Direct Gmail Web Compose link fallback (most reliable for browser users)
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email1)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Attempt to open the custom Gmail URL first for a better web experience
+      window.open(gmailUrl, "_blank");
+
+      sendEvent("qr_open_email", {
+        event_category: "QR",
+        event_label: "Email Opened in Gmail Web",
+      });
+      return;
+    }
+
+    // Special handling for SMS (Converting SMSTO to standard sms: protocol)
+    if (activeTab === "sms") {
+      const smsUrl = `sms:${phone}?body=${encodeURIComponent(message)}`;
+
+      // Use location.href to trigger the native app directly
+      window.location.href = smsUrl;
+
+      sendEvent("qr_open_sms", {
+        event_category: "QR",
+        event_label: "SMS App Triggered",
+      });
+      return;
+    }
+
+    // If text tab and it's not a URL/special scheme, search on Google
+    if (activeTab === "text") {
+      const isUrl = /^(https?:\/\/|mailto:|tel:|sms:|wa\.me\/|WIFI:|www\.)/i.test(liveValue);
+      if (!isUrl) {
+        url = `https://www.google.com/search?q=${encodeURIComponent(liveValue)}`;
+      } else if (url.toLowerCase().startsWith("www.")) {
+        url = `https://${url}`;
+      }
+    }
+
+    // Final check for website tab to ensure protocol
+    if (activeTab === "website" && !/^https?:\/\//i.test(url)) {
+      url = `https://${url}`;
+    }
+
+    if (url) {
+      window.open(url, "_blank");
+    }
+
+    // GA Event
+    sendEvent("qr_open_link", {
+      event_category: "QR",
+      event_label: "QR Link Opened (Live)",
+      tab_type: activeTab,
+    });
   };
 
 
@@ -1253,451 +1323,14 @@ const QRGenerator = () => {
       new_color: newColor,
     });
   };
-  // generateQr = async () => {
-  //   if (!website || website.trim() === "") {
-  //     alert("URL is required");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-
-  //   try {
-  //     const response = await fetchWithTimeout(
-  //       `${URL}/api/qr-codes/`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           name: "Example Website",
-  //           qr_type: "url",
-  //           content: { url: website },
-  //           size: 10,
-  //           border: 4,
-  //           format: "png",
-  //           fill_color: qrColor,
-  //           back_color: bgColor,
-  //         }),
-  //       },
-  //       15000
-  //     );
-
-  //     const text = await response.text();
-  //     let data;
-
-  //     try {
-  //       data = JSON.parse(text);
-  //     } catch (err) {
-  //       console.error("Server returned non-JSON:", err, text);
-  //       throw new Error("Invalid server response");
-  //     }
-
-  //     if (!response.ok) {
-  //       console.log("API raw result:", data);
-
-  //       // ❌ QR Generate FAIL Event
-  //       sendEvent("qr_generate_failed", {
-  //         event_category: "QR",
-  //         event_label: "QR Generation Failed",
-  //         error_message: data.message || "Unknown Error",
-  //       });
-
-  //       throw new Error(data.message || "Failed to generate QR code");
-  //     }
-
-  //     const finalImg =
-  //       data.data?.qr_image ||
-  //       data.data?.qr_image_url ||
-  //       data.qr_image_url;
-
-  //     setQrCode(finalImg);
-
-  //     // ✅ SUCCESS EVENT — QR Generated
-  //     sendEvent("qr_generate", {
-  //       event_category: "QR",
-  //       event_label: "QR Code Generated",
-  //       url_length: website.length,
-  //       fill_color: qrColor,
-  //       back_color: bgColor,
-  //       format: "png",
-  //     });
-  //   } catch (err) {
-  //     // ❌ TIMEOUT / OTHER ERROR EVENT
-  //     sendEvent("qr_generate_error", {
-  //       event_category: "QR",
-  //       event_label: "QR Error Occurred",
-  //       error_message: err.message,
-  //     });
-
-  //     if (err.message === "timeout") {
-  //       alert("QR generation took too long. Please try again.");
-  //     } else {
-  //       alert("Something went wrong. Try again.");
-  //     }
-  //     console.error("QR Error:", err);
-  //   }
-
-  //   setLoading(false);
-  // };
-
-
-
-  // const TextQr = async () => {
-  //   if (!text2 || "" === text2.trim()) {
-  //     alert("Text is required");
-  //     return;
-  //   }
-  //   try {
-  //     let e = await fetch(
-  //       `${URL}/api/qr-codes/`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           name: "Important Note",
-  //           qr_type: "text",
-  //           content: { text: text2 },
-  //           format: "png",
-  //           fill_color: qrColor,
-  //           back_color: bgColor,
-  //         }),
-  //       }
-  //     ),
-  //       r = await e.text(),
-  //       t;
-  //     try {
-  //       t = JSON.parse(r);
-  //     } catch {
-  //       throw (
-  //         (console.error("Server returned non-JSON:", r),
-  //           Error("Server error: " + e.status))
-  //       );
-  //     }
-  //     if (!e.ok)
-  //       throw (
-  //         (console.log("API raw result:", t),
-  //           Error(t.message || "Failed to generate QR code"))
-  //       );
-  //     const a = t.data?.qr_image || t.data?.qr_image_url || t.qr_image_url;
-  //     console.log("✅ Final SMS QR URL:", a),
-  //       setQrText(a);
-  //     // handleDownload(a);
-  //   } catch (i) {
-  //     console.error("Error generating SMS QR:", i);
-  //   }
-  // },
-  //   VCardQr = async () => {
-  //     if (!fname || "" === fname.trim()) {
-  //       alert("name is required");
-  //       return;
-  //     }
-  //     if (!lname || "" === lname.trim()) {
-  //       alert("surname is required");
-  //       return;
-  //     }
-  //     if (!phone1 || "" === phone1.trim()) {
-  //       alert("phone is required");
-  //       return;
-  //     }
-  //     if (!email || "" === email.trim()) {
-  //       alert("email is required");
-  //       return;
-  //     }
-  //     if (!pWebsite || "" === pWebsite.trim()) {
-  //       alert("Personal Website is required");
-  //       return;
-  //     }
-  //     if (!addressVcard || "" === addressVcard.trim()) {
-  //       alert("Address is required");
-  //       return;
-  //     }
-  //     if (!cpyName || "" === cpyName.trim()) {
-  //       alert("Company Name is required");
-  //       return;
-  //     }
-  //     if (!pTitleVcard || "" === pTitleVcard.trim()) {
-  //       alert("Position Title is required");
-  //       return;
-  //     }
-  //     try {
-  //       let e = await fetch(
-  //         `${URL}/api/qr-codes/`,
-  //         {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify({
-  //             name: "Business Card",
-  //             qr_type: "vcard",
-  //             content: {
-  //               first_name: fname,
-  //               last_name: lname,
-  //               phone: phone1,
-  //               email: email,
-  //               website: pWebsite,
-  //               organization: cpyName,
-  //               title: pTitleVcard,
-  //               // address: addressVcard,
-  //             },
-  //             format: "png",
-  //             fill_color: qrColor,
-  //             back_color: bgColor,
-  //           }),
-  //         }
-  //       ),
-  //         r = await e.text(),
-  //         t;
-  //       try {
-  //         t = JSON.parse(r);
-  //       } catch {
-  //         throw (
-  //           (console.error("Server returned non-JSON:", r),
-  //             Error("Server error: " + e.status))
-  //         );
-  //       }
-  //       if (!e.ok)
-  //         throw (
-  //           (console.log("API raw result:", t),
-  //             Error(t.message || "Failed to generate QR code"))
-  //         );
-  //       const a = t.data?.qr_image || t.data?.qr_image_url || t.qr_image_url;
-  //       console.log("✅ Final SMS QR URL:", a),
-  //         setQrVcard(a);
-  //     } catch (i) {
-  //       console.error("Error generating SMS QR:", i);
-  //     }
-  //   };
-  // const WifiQr = async () => {
-  //   if (!ssid || "" === ssid.trim()) {
-  //     alert("SSID is required");
-  //     return;
-  //   }
-  //   if (!password || "" === password.trim()) {
-  //     alert("Password is required");
-  //     return;
-  //   }
-  //   if (null == hidden) {
-  //     alert("Hidden value is required");
-  //     return;
-  //   }
-  //   try {
-  //     let e = await fetch(
-  //       `${URL}/api/qr-codes/`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           name: "Office WiFi",
-  //           qr_type: "wifi",
-  //           content: {
-  //             ssid: ssid,
-  //             password: password,
-  //             security: "WPA",
-  //             hidden: "true" === hidden || !0 === hidden,
-  //           },
-  //           description: "Guest WiFi Access",
-  //           format: "png",
-  //           size: 10,
-  //           border: 4,
-  //           fill_color: qrColor,
-  //           back_color: bgColor,
-  //         }),
-  //       }
-  //     ),
-  //       r = await e.text(),
-  //       t;
-  //     try {
-  //       t = JSON.parse(r);
-  //     } catch {
-  //       throw (
-  //         (console.error("Server returned non-JSON:", r),
-  //           Error("Server error: " + e.status))
-  //       );
-  //     }
-  //     if (!e.ok)
-  //       throw (
-  //         (console.log("API raw result:", t),
-  //           Error(t.message || "Failed to generate QR code"))
-  //       );
-  //     const i = t.data?.qr_image || t.data?.qr_image_url || t.qr_image_url;
-  //     console.log("✅ Final WiFi QR URL:", i),
-  //       setQrWifi(i);
-  //   } catch (a) {
-  //     console.error("Error generating WiFi QR:", a);
-  //   }
-  // },
-  //   whatsappQr = async () => {
-  //     if (!phone2 || "" === phone2.trim()) {
-  //       alert("Phone number is required");
-  //       return;
-  //     }
-  //     if (!message2 || "" === message2.trim()) {
-  //       alert("Message is required");
-  //       return;
-  //     }
-  //     try {
-  //       let e = await fetch(
-  //         `${URL}/api/qr-codes/`,
-  //         {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify({
-  //             name: "WhatsApp Message",
-  //             qr_type: "whatsapp",
-  //             content: { phone: phone2, message: message2 },
-  //             format: "png",
-  //             fill_color: qrColor,
-  //             back_color: bgColor,
-  //           }),
-  //         }
-  //       ),
-  //         r = await e.text(),
-  //         t;
-  //       try {
-  //         t = JSON.parse(r);
-  //       } catch {
-  //         throw (
-  //           (console.error("Server returned non-JSON:", r),
-  //             Error("Server error: " + e.status))
-  //         );
-  //       }
-  //       if (!e.ok)
-  //         throw (
-  //           (console.log("API raw result:", t),
-  //             Error(t.message || "Failed to generate QR code"))
-  //         );
-  //       let i = t.data?.qr_image_url || t.qr_image_url;
-  //       console.log("✅ Final SMS QR URL:", i), setQrWhatsapp(i);
-  //     } catch (a) {
-  //       console.error("Error generating SMS QR:", a);
-  //     }
-  //   };
-
-  // const emailQr = async () => {
-  //   if (!email1 || "" === email1.trim()) {
-  //     alert("Email is required");
-  //     return;
-  //   }
-  //   let e = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   if (!e.test(email1)) {
-  //     alert("Please enter a valid email address (e.g. test@example.com)");
-  //     return;
-  //   }
-  //   if (!subject || "" === subject.trim()) {
-  //     alert("Subject is required");
-  //     return;
-  //   }
-  //   if (!body || "" === body.trim()) {
-  //     alert("Body is required");
-  //     return;
-  //   }
-  //   try {
-  //     let r = await fetch(
-  //       `${URL}/api/qr-codes/`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           name: "Email Us",
-  //           qr_type: "email",
-  //           content: {
-  //             email: email1.trim(),
-  //             subject: subject.trim(),
-  //             body: body.trim(),
-  //           },
-  //           format: "png",
-  //           size: 10,
-  //           border: 4,
-  //           fill_color: qrColor,
-  //           back_color: bgColor,
-  //         }),
-  //       }
-  //     ),
-  //       t = await r.text(),
-  //       i = JSON.parse(t);
-  //     if (!r.ok)
-  //       throw (
-  //         (console.log("API raw result:", i),
-  //           Error(i.message || "Failed to generate QR code"))
-  //       );
-  //     let a = i.data?.qr_image_url || i.qr_image_url;
-  //     console.log("✅ Final Email QR URL:", a), setQrEmail(a);
-  //   } catch (o) {
-  //     console.error("Error generating Email QR:", o);
-  //   }
-  // },
-  //   SMSQr = async () => {
-  //     if (!phone || "" === phone.trim()) {
-  //       alert("Phone number is required");
-  //       return;
-  //     }
-  //     if (!message || "" === message.trim()) {
-  //       alert("Message is required");
-  //       return;
-  //     }
-  //     try {
-  //       let e = await fetch(
-  //         `${URL}/api/qr-codes/`,
-  //         {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify({
-  //             name: "Text Us",
-  //             qr_type: "sms",
-  //             content: { phone, message },
-  //             format: "png",
-  //             size: 10,
-  //             border: 4,
-  //             fill_color: qrColor,
-  //             back_color: bgColor,
-  //           }),
-  //         }
-  //       ),
-  //         r = await e.text(),
-  //         t = JSON.parse(r);
-  //       if (!e.ok) throw Error(t.message || "Failed to generate QR code");
-  //       let i = t.data?.qr_image_url || t.qr_image_url;
-  //       setQrSMS(i);
-  //     } catch (a) {
-  //       console.error("Error generating SMS QR:", a);
-  //     }
-  //   };
-
-  // 08-01 --working//
-  // const handleGenerate = () => {
-  //   if (!getQRValue()) {
-  //     alert("Please fill required fields");
-  //     return;
-  //   }
-  //   setLoading(true);
-
-  //   if (activeTab === "sms") {
-  //     SMSQr();
-  //   } else if (activeTab === "website") {
-  //     generateQr();
-  //   } else if (activeTab === "text") {
-  //     TextQr();
-  //   } else if (activeTab === "vcard") {
-  //     VCardQr();
-  //   } else if (activeTab === "wifi") {
-  //     WifiQr();
-  //   } else if (activeTab === "whatsapp") {
-  //     whatsappQr();
-  //   } else if (activeTab === "email") {
-  //     emailQr();
-  //   }
-
-  //   setLoading(false);
-  // };
-
   // 🔹 GENERATE QR
   const handleGenerate = () => {
     if (loading) return;
 
-    // ✅ Validate Website URL — only http:// and https:// allowed
     if (activeTab === "website") {
-      const error = validateWebsiteUrl(website);
-      if (error) {
-        setUrlError(error);
-        alert(error);
+      const urlPattern = /^https?:\/\//i;
+      if (!urlPattern.test(website)) {
+        alert("Please enter a valid URL starting with http:// or https://");
         return;
       }
     }
@@ -1721,44 +1354,29 @@ const QRGenerator = () => {
 
     setQrValue(value);
 
-    // ✅ Save generated QR to Admin Panel (AdminContext → localStorage)
-    const TAB_TO_ADMIN_TYPE = {
-      website: "URL",
-      text: "Text",
-      vcard: "vCard",
-      wifi: "WiFi",
-      whatsapp: "Social",
-      email: "Email",
-      sms: "SMS",
-    };
-    const TAB_TO_NAME = {
-      website: `Website QR — ${website}`,
-      text: "Text QR",
-      vcard: `vCard — ${fname} ${lname}`.trim(),
-      wifi: `WiFi — ${ssid}`,
-      whatsapp: `WhatsApp — ${phone2}`,
-      email: `Email — ${email1}`,
-      sms: `SMS — ${phone}`,
-    };
-    addQrCode({
-      name: TAB_TO_NAME[activeTab] || `${activeTab} QR`,
-      type: TAB_TO_ADMIN_TYPE[activeTab] || "Text",
-      value: value,
-      status: "active",
-      fgColor: qrColor,   // foreground colour picked on homepage
-      bgColor: bgColor,   // background colour picked on homepage
-    });
+    // ✅ Automatic save for logged-in admins
+    if (isLoggedIn) {
+      const typeMapping = {
+        website: "URL",
+        wifi: "WiFi",
+        vcard: "vCard",
+        whatsapp: "WhatsApp",
+        sms: "SMS",
+        email: "Email",
+        text: "Text"
+      };
+      const typeLabel = typeMapping[activeTab] || activeTab.toUpperCase();
+      const qrName = `${typeLabel} — ${value.length > 30 ? value.substring(0, 27) + "..." : value}`;
 
-    // Route to appropriate QR generation function based on activeTab
-    // Note: These functions are currently commented out in the code
-    // Uncomment the respective functions when ready to use them
-    // "sms" === activeTab ? SMSQr()
-    //   : "website" === activeTab ? generateQr()
-    //     : "text" === activeTab ? TextQr()
-    //       : "vcard" === activeTab ? VCardQr()
-    //         : "wifi" === activeTab ? WifiQr()
-    //           : "whatsapp" === activeTab ? whatsappQr()
-    //             : "email" === activeTab && emailQr();
+      addQrCode({
+        name: qrName,
+        type: typeLabel,
+        value: value,
+        status: "active",
+        fgColor: qrColor,
+        bgColor: bgColor
+      });
+    }
   };
 
   // 🔹 DOWNLOAD QR
@@ -1766,6 +1384,8 @@ const QRGenerator = () => {
     if (!qrRef.current) return;
 
     try {
+      // Dynamic import to reduce initial bundle size
+      const htmlToImage = await import("html-to-image");
       const dataUrl = await htmlToImage.toPng(qrRef.current, {
         skipFonts: true,
         cacheBust: true,
@@ -1836,112 +1456,21 @@ const QRGenerator = () => {
                   </Tab>
                 ))}
               </Tabs>
-              {/* Step 2 – Design your QR (matches your desktop screenshot) */}
+              {/* Step 2 – Design your QR */}
               <div className="mt-4 p-3">
                 <h4 className="fw-bold mb-3">Design your QR</h4>
 
                 <Tabs defaultActiveKey="frame" className="mb-3">
                   <Tab eventKey="frame">
-                    {/* title="Frame" */}
-                    {/* Frame Selection */}
-                    {/* Frame Selector Grid */}
-                    {/* Frame Preview */}
-                    {/* QR Overlay */}
-                    {/* <div className="d-flex gap-3 overflow-auto pb-2 mb-3">
-                            <div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  gap: "0.5rem",
-                                  overflowX: "auto",
-                                }}
-                              >
-                                {frameOptions1.map((frame, idx) => (
-                                  <div
-                                    key={idx}
-                                    role="button"
-                                    className={`border rounded text-center p-2 ${
-                                      selectedFrameIndex === idx
-                                        ? "border-primary bg-light"
-                                        : ""
-                                    }`}
-                                    style={{
-                                      width: 130,
-                                      height: 150,
-                                      flex: "0 0 auto",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      position: "relative",
-                                      cursor: "pointer",
-                                    }}
-                                    onClick={() => setSelectedFrameIndex(idx)}
-                                  >
-                                    
-                                    {frame.image ? (
-                                      <img
-                                        src={frame.image}
-                                        alt={`Frame ${idx}`}
-                                        loading="lazy"
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                          borderRadius: "6px",
-                                          position: "absolute",
-                                          top: 0,
-                                          left: 0,
-                                          zIndex: 1,
-                                        }}
-                                      />
-                                    ) : (
-                                      <span></span>
-                                    )}
-                                    
-                                    {qr && frame.slot && (
-                                      <img
-                                        src={qr}
-                                        alt="QR Code Preview"
-                                        fetchPriority="high"
-                                        loading="eager"
-                                        decoding="async" // non-blocking decode
-                                        style={{
-                                          position: "absolute",
-                                          objectFit: "contain",
-                                          zIndex: 2,
-                                          pointerEvents: "none",
-                                          top: `${frame.slot.top}%`,
-                                          left: `${frame.slot.left}%`,
-                                          width: `${frame.slot.width}%`,
-                                          height: `${frame.slot.height}%`,
-                                        }}
-                                      />
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div> */}
-
-                    {/* Frame Settings */}
                     <div>
-                      {/* <div className="mb-3">
-                              <label className="form-label fw-bold">Text</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Scan me!"
-                                value={frameText}
-                                onChange={(e) => setFrameText(e.target.value)}
-                              />
-                            </div> */}
                       <Row className="g-3">
 
                         <div className="container">
                           <div className="row">
                             <div className="col-md-3 mb-3">
-                              <b>Color</b>
+                              <label htmlFor="qrColorInput" className="fw-bold mb-1 d-block">Color</label>
                               <input
+                                id="qrColorInput"
                                 type="color"
                                 value={qrColor}
                                 className="custom-color"
@@ -1951,8 +1480,9 @@ const QRGenerator = () => {
                             </div>
 
                             <div className="col-md-3">
-                              <b>Background Color</b>
+                              <label htmlFor="bgColorInput" className="fw-bold mb-1 d-block">Background Color</label>
                               <input
+                                id="bgColorInput"
                                 type="color"
                                 value={bgColor}
                                 className="custom-color"
@@ -1984,281 +1514,7 @@ const QRGenerator = () => {
                     </div>
                   </Tab>
 
-                  {/* Shape Style Section */}
-                  {/* Border & Center Style Section */}
-                  {/* <Tab eventKey="shape" title="Shape">
-                          <div className="mt-4">
-                            <div className="border rounded p-3 mb-4">
-                              <h5 className="fw-bold mb-3">Shape style</h5>
-                              <div className="d-flex flex-wrap gap-2 mb-3">
-                                {[...Array(8)].map((_, i) => (
-                                  <button
-                                    key={`shape-${i + 1}`} // ✅ clearer, more explicit
-                                    className="btn btn-light border p-2"
-                                    style={{
-                                      width: "50px",
-                                      height: "50px",
-                                      objectFit: "contain",
-                                    }}
-                                  >
-                                    <img
-                                      src={`/shapes/shape${i + 1}.png`}
-                                      alt={`Shape ${i + 1}`}
-                                      className="img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </button>
-                                ))}
-                              </div>
-                              <br />
-                              <div className="d-flex gap-3 align-items-center">
-                                <div>
-                                  <label className="form-label">
-                                    Border colour
-                                    <input
-                                      type="color"
-                                      className="form-control form-control-color"
-                                      defaultValue="#000000"
-                                    />
-                                  </label>
-                                </div>
-                                <div>
-                                  <label className="form-label">
-                                    Background colour
-                                    <input
-                                      type="color"
-                                      className="form-control form-control-color"
-                                      defaultValue="#FFFFFF"
-                                    />
-                                  </label>
-                                </div>
-                                <button className="btn btn-outline-primary mt-4">
-                                  Invert
-                                </button>
-                              </div>
-                            </div>
-                            <div className="border rounded p-3">
-                              <h5 className="fw-bold mb-3">Border style</h5>
-                              <div className="d-flex flex-wrap gap-2 mb-3">
-                                {[...Array(10)].map((_, i) => (
-                                  <button
-                                    key={`border-${i + 1}`} // ✅ key on top-level element
-                                    className="btn btn-light border p-2"
-                                    style={{ width: "50px", height: "50px" }}
-                                  >
-                                    <img
-                                      src={`/borders/border${i + 1}.png`}
-                                      alt={`Border ${i + 1}`}
-                                      className="img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </button>
-                                ))}
-                              </div>
-                              <br />
-                              <h5 className="fw-bold mb-3">Center style</h5>
-                              <div className="d-flex flex-wrap gap-2 mb-3">
-                                {[...Array(10)].map((_, i) => (
-                                  <button
-                                    key={`center-${i + 1}`} // ✅ better than just `i`
-                                    className="btn btn-light border p-2"
-                                    style={{ width: "50px", height: "50px" }}
-                                  >
-                                    <img
-                                      src={`/centers/center${i + 1}.png`}
-                                      alt={`Center ${i + 1}`}
-                                      className="img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </button>
-                                ))}
-                              </div>
-                              <br />
-                              <div className="d-flex gap-3 align-items-center">
-                                <div>
-                                  <label className="form-label">Border colour</label>
-                                  <input
-                                    type="color"
-                                    className="form-control form-control-color"
-                                    defaultValue="#000000"
-                                  />
-                                </div>
-                                <div>
-                                  <label className="form-label">
-                                    Background colour
-                                  </label>
-                                  <input
-                                    type="color"
-                                    className="form-control form-control-color"
-                                    defaultValue="#000000"
-                                  />
-                                </div>
-                                <button className="btn btn-outline-primary mt-4">
-                                  Invert
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab> */}
 
-                  {/* Upload logo */}
-                  {/* Logo options */}
-
-                  {/* <Tab eventKey="logo" title="Logo">
-                          <div className="p-3">
-                            <h6 className="mb-3 fw-bold">Select a logo</h6>
-      
-                            <div
-                              className="d-flex gap-3 overflow-auto mb-3 pb-2"
-                              style={{ whiteSpace: "nowrap" }}
-                            >
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <RxValueNone className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <SiWhatsapp className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <RiLink className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <CiLocationOn className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <FaWifi className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <SlCalender className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <TfiEmail className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <RiQrScan2Line className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <GrGallery className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <MdDinnerDining className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <FaQrcode className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <FaPaypal className="LoGo_122" />
-                              </div>
-                              <div
-                                role="button"
-                                className="border rounded p-2 text-center"
-                              >
-                                <FaBitcoin className="LoGo_122" />
-                              </div>
-                            </div>
-
-                            <div className="border rounded p-3 text-center">
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                        </Tab> */}
-
-                  {/* <Tab eventKey="level" title="Level">
-                          <div className="mt-3">
-                            <h6 className="fw-bold mb-3">Select a level</h6>
-                            <div className="d-flex gap-4 flex-wrap">
-                              {[
-                                {
-                                  name: "Level Q",
-                                  percent: "25%",
-                                  img: "your-q-image.png",
-                                },
-                                {
-                                  name: "Level H",
-                                  percent: "30%",
-                                  img: "your-h-image.png",
-                                },
-                                {
-                                  name: "Level M",
-                                  percent: "15%",
-                                  img: "your-m-image.png",
-                                },
-                                {
-                                  name: "Level L",
-                                  percent: "7%",
-                                  img: "your-l-image.png",
-                                },
-                              ].map((level) => (
-                                <div
-                                  key={level.name} // ✅ better: unique & stable
-                                  role="button"
-                                  onClick={() => setSelectedLevel(level.name)}
-                                  className={`border rounded p-2 text-center ${
-                                    selectedLevel === level.name
-                                      ? "border-primary bg-light"
-                                      : ""
-                                  }`}
-                                  style={{
-                                    cursor: "pointer",
-                                    width: "auto",
-                                    height: "100px",
-                                  }}
-                                >
-                                  <img
-                                    src={level.img}
-                                    alt={level.name}
-                                    className="img-fluid"
-                                    loading="lazy"
-                                    style={{ width: "80px", height: "80px" }}
-                                  />
-                                  <div className="mt-2 small fw-semibold">
-                                    {level.name}
-                                  </div>
-                                  <div className="text-muted">{level.percent}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </Tab> */}
                 </Tabs>
                 <div className="RIght_Row"></div>
               </div>
@@ -2277,96 +1533,6 @@ const QRGenerator = () => {
                   // border: "1px dashed #ddd",
                 }}
               >
-                {/* Frame (background or foreground—most frames work fine behind the QR) */}
-                {/* ---- QR Preview ---- */}
-                {/* <div>
-                  {activeTab === "website" && qrCode && (
-                    <img
-                      src={qrCode}
-                      alt="Website QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("website")}
-                    />
-                  )}
-
-                  {activeTab === "sms" && qrSMS && (
-                    <img
-                      src={qrSMS}
-                      alt="SMS QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("sms")}
-                    />
-                  )}
-                  {activeTab === "text" && qrText && (
-                    <img
-                      src={qrText}
-                      alt="Text QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("text")}
-                    />
-                  )}
-                  {activeTab === "email" && qrEmail && (
-                    <img
-                      src={qrEmail}
-                      alt="Email QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("email")}
-                    />
-                  )}
-                  {activeTab === "vcard" && qrVcard && (
-                    <img
-                      src={qrVcard}
-                      alt="VCard QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("vcard")}
-                    />
-                  )}
-                  {activeTab === "wifi" && qrWifi && (
-                    <img
-                      src={qrWifi}
-                      alt="WiFi QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("wifi")}
-                    />
-                  )}
-                  {activeTab === "whatsapp" && qrWhatsapp && (
-                    <img
-                      src={qrWhatsapp}
-                      alt="WhatsApp QR Code"
-                      style={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDownload("whatsapp")}
-                    />
-                  )}
-                </div> */}
-
                 {/* QR SLOT */}
                 <div
                   style={{
@@ -2405,24 +1571,20 @@ const QRGenerator = () => {
                         fgColor={generatedQrColor}
                         bgColor={generatedBgColor}
                         level="H"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxWidth: "256px",
-                          maxHeight: "256px"
-                        }}
+                        style={{ display: "block" }}
                       />
                     ) : (
                       <div style={{ textAlign: "center", color: "#999" }}>
                         <img
                           src={QR_1}
                           alt="TheQRIFY Img"
+                          width={257}
+                          height={259}
                           style={{
-                            width: "100%",
-                            height: "100%",
-                            maxWidth: "356px",
-                            maxHeight: "356px"
-                          }} />
+                            display: "block", objectFit: "contain", width: `${slot.width}%`,
+                            height: `${slot.height}%`,
+                          }}
+                        />
                       </div>
                     )}
                   </div>
@@ -2430,22 +1592,30 @@ const QRGenerator = () => {
               </div>
 
 
-              <div className="col-md-12 nnnn1">
+              <div className="nnnn1">
                 <Button
                   variant="light"
-                  className="rounded-pill border text-center"
+                  className="border text-center"
                   onClick={downloadCurrentQR}
                 >
                   <HiOutlineDownload className="Dw_Icon" />
-                  Download QR
+                  Download
                 </Button>
                 <Button
                   variant="light"
-                  className="rounded-pill nnnn2 border text-center"
+                  className="border text-center"
                   onClick={handleShare}
                 >
                   <HiOutlineShare className="Dw_Icon" />
-                  Share QR
+                  Share
+                </Button>
+                <Button
+                  variant="primary"
+                  className="primary-action text-center"
+                  onClick={handleOpenLink}
+                >
+                  <HiOutlineExternalLink className="Dw_Icon" />
+                  Open Link
                 </Button>
               </div>
             </Col>
@@ -2480,25 +1650,20 @@ const QRGenerator = () => {
                     fgColor={generatedQrColor}
                     bgColor={generatedBgColor}
                     level="H"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      maxWidth: "256px",
-                      maxHeight: "256px",
-                      padding: "10px",
-                    }}
+                    style={{ display: "block" }}
                   />
                 ) : (
                   <div style={{ textAlign: "center", color: "#999" }}>
                     <img
                       src={QR_1}
                       alt="TheQRIFY Img"
+                      width={257}
+                      height={259}
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        maxWidth: "256px",
-                        maxHeight: "256px",
-                      }} />
+                        display: "block", objectFit: "contain", width: `${slot.width}%`,
+                        height: `${slot.height}%`,
+                      }}
+                    />
                   </div>
                 )}
               </div>
@@ -2614,24 +1779,34 @@ const QRGenerator = () => {
                   {/* {country?.toUpperCase()} */}
                 </Button>
 
-                {/* Download QR */}
-                <Button
-                  variant="light"
-                  className="rounded-pill border mb-2 w-100 text-center"
-                  //onClick={downloadCurrentQR}
-                  onClick={downloadCurrentQR} //09-01//
-                >
-                  <HiOutlineDownload className="Dw_Icon" />
-                  Download QR
-                </Button>
-                <Button
-                  variant="light"
-                  className="rounded-pill w-100 border text-center"
-                  onClick={handleShare}
-                >
-                  <HiOutlineShare className="Dw_Icon" />
-                  Share QR
-                </Button>
+                {/* Action Buttons */}
+                <div className="d-flex flex-column gap-2 mt-3">
+                  <Button
+                    variant="light"
+                    className="rounded-pill border w-100 py-2 d-flex align-items-center justify-content-center"
+                    onClick={downloadCurrentQR}
+                  >
+                    <HiOutlineDownload className="Dw_Icon" />
+                    Download QR
+                  </Button>
+                  <Button
+                    variant="light"
+                    className="rounded-pill border w-100 py-2 d-flex align-items-center justify-content-center"
+                    onClick={handleShare}
+                  >
+                    <HiOutlineShare className="Dw_Icon" />
+                    Share QR
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="rounded-pill w-100 py-2 d-flex align-items-center justify-content-center fw-bold"
+                    style={{ backgroundColor: '#015f9e', borderColor: '#015f9e' }}
+                    onClick={handleOpenLink}
+                  >
+                    <HiOutlineExternalLink className="Dw_Icon" />
+                    Open Link
+                  </Button>
+                </div>
               </>
             )}
 
@@ -2640,8 +1815,9 @@ const QRGenerator = () => {
               <div className="bg-light p-3 rounded">
                 <div className="row mb-3">
                   <div className="col-md-6 d-flex flex-column align-items-center">
-                    <b>Color</b>
+                    <label htmlFor="qrColorInputMobile" className="fw-bold mb-1">Color</label>
                     <input
+                      id="qrColorInputMobile"
                       type="color"
                       value={qrColor}
                       className="custom-color mt-2"
@@ -2650,8 +1826,9 @@ const QRGenerator = () => {
                   </div>
 
                   <div className="col-md-6 d-flex flex-column align-items-center">
-                    <b>Background Color</b>
+                    <label htmlFor="bgColorInputMobile" className="fw-bold mb-1">Background Color</label>
                     <input
+                      id="bgColorInputMobile"
                       type="color"
                       value={bgColor}
                       className="custom-color mt-2"
@@ -2713,11 +1890,15 @@ const QRGenerator = () => {
             <Col md={4} sm={6} xs={12}>
               <div className="card h-100 d-flex flex-column align-items-center text-center">
                 <picture className="w-100">
-                  <source srcSet={step1} type="image/webp" />
+                  <source srcSet={step1} type="image/png" />
                   <img
                     src={step1}
                     alt="Step 1"
                     loading="lazy"
+                    width={354}
+                    height={177}
+                    sizes="(max-width: 576px) 90vw, (max-width: 992px) 45vw, 354px"
+                    srcSet={`${step1} 354w`}
                     className="card-img-top img-fluid p-3 step-card-img"
                   />
                 </picture>
@@ -2751,12 +1932,19 @@ const QRGenerator = () => {
 
             <Col md={4} sm={6} xs={12}>
               <div className="card h-100 d-flex flex-column align-items-center text-center">
-                <img
-                  src={step2}
-                  alt="Step 2"
-                  loading="lazy"
-                  className="card-img-top img-fluid p-3 step-card-img"
-                />
+                <picture className="w-100">
+                  <source srcSet={step2} type="image/png" />
+                  <img
+                    src={step2}
+                    alt="Step 2"
+                    loading="lazy"
+                    width={354}
+                    height={177}
+                    sizes="(max-width: 576px) 90vw, (max-width: 992px) 45vw, 354px"
+                    srcSet={`${step2} 354w`}
+                    className="card-img-top img-fluid p-3 step-card-img"
+                  />
+                </picture>
 
                 <div className="card-body d-flex flex-column">
                   <h1 className="fw-bold h5">Step 2</h1>
@@ -2781,12 +1969,19 @@ const QRGenerator = () => {
 
             <Col md={4} sm={6} xs={12}>
               <div className="card h-100 d-flex flex-column align-items-center text-center">
-                <img
-                  src={step3}
-                  alt="Step 3"
-                  loading="lazy"
-                  className="card-img-top img-fluid p-3 step-card-img"
-                />
+                <picture className="w-100">
+                  <source srcSet={step3} type="image/png" />
+                  <img
+                    src={step3}
+                    alt="Step 3"
+                    loading="lazy"
+                    width={354}
+                    height={177}
+                    sizes="(max-width: 576px) 90vw, (max-width: 992px) 45vw, 354px"
+                    srcSet={`${step3} 354w`}
+                    className="card-img-top img-fluid p-3 step-card-img"
+                  />
+                </picture>
 
                 <div className="card-body d-flex flex-column">
                   <h1 className="fw-bold h5">Step 3</h1>
@@ -2811,11 +2006,10 @@ const QRGenerator = () => {
           <div className="mt-5">
             <Button
               as="a"
-              href="/#QR_Main"
+              href="#QR_Main"
               variant="primary"
-              size="lg"
-              className="fw-semibold rounded-pill touch-btn"
-              style={{ backgroundColor: '#005F9E' }}
+              className="fw-semibold rounded-pill"
+              style={{ backgroundColor: '#005F9E', padding: '14px 26px', borderRadius: '50px', textDecoration: 'none', fontSize: '1.1rem', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', transition: 'transform 0.2s' }}
             >
               Create QR code
             </Button>
@@ -3211,7 +2405,7 @@ const QRGenerator = () => {
             <li className="nav-item">
               <button
                 className={`m-2 nav-link ${
-                  activeKey === "photographer" ? "active" : ""
+              activeKey === "photographer" ? "active" : ""
                 }`}
                 onClick={() => setActiveKey("photographer")}
               >
@@ -3222,8 +2416,347 @@ const QRGenerator = () => {
         </div>
       </div>
 </div> */}
+      {/* ═══════════════════════════════════════════════════
+          SECTION: What is a QR Code Generator
+      ═══════════════════════════════════════════════════ */}
+      <div id="what-is-qr-generator" style={{ background: "linear-gradient(135deg, #ECF7FF 0%, #ECF7FF 100%)", padding: "80px 0" }}>
+        <div className="container">
+          <div className="row align-items-center g-5">
+            <div className="col-lg-6">
+              {/* Badge */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(31, 96, 160, 0.1)", borderRadius: "30px", padding: "6px 18px", marginBottom: "20px" }}>
+                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#1F60A0", display: "inline-block", boxShadow: "0 0 6px rgba(31, 96, 160, 0.5)" }}></span>
+                <span style={{ fontSize: "13px", fontWeight: 600, color: "#1F60A0", letterSpacing: "0.5px", textTransform: "uppercase" }}>QR Code Generator</span>
+              </div>
+              <h2 style={{ fontSize: "2.2rem", fontWeight: 800, color: "#0d1b2a", lineHeight: 1.25, marginBottom: "20px" }}>
+                What is a QR Code Generator?
+              </h2>
+              <p style={{ fontSize: "1.05rem", color: "#475569", lineHeight: 1.8, marginBottom: "16px" }}>
+                A <strong style={{ color: "#0d1b2a" }}>QR Code Generator</strong> is a powerful online tool that instantly converts any type of digital information — such as a website URL, phone number, contact card, WiFi credentials, payment link, or plain text — into a scannable QR code image.
+              </p>
+              <p style={{ fontSize: "1.05rem", color: "#475569", lineHeight: 1.8, marginBottom: "16px" }}>
+                QR codes (Quick Response codes) are two-dimensional barcodes that can be read at high speed by any modern smartphone camera. Unlike traditional 1D barcodes that store only a handful of characters, a single QR code can hold up to <strong style={{ color: "#0d1b2a" }}>4,296 alphanumeric characters</strong> or 7,089 numeric characters — making them versatile for practically every use case imaginable.
+              </p>
+              <p style={{ fontSize: "1.05rem", color: "#475569", lineHeight: 1.8, marginBottom: "24px" }}>
+                <strong style={{ color: "#1F60A0" }}>TheQRIFY</strong> is a free, browser-based QR code generator that requires no download, no registration, and no technical knowledge. Simply choose your content type, enter your data, customise the colours, and download a high-resolution code in seconds.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                {["No sign-up needed", "Free forever", "High-res downloads", "Custom colours", "Mobile-ready", "Instant generation"].map((tag) => (
+                  <span key={tag} style={{ background: "#fff", border: "1.5px solid rgba(31, 96, 160, 0.15)", borderRadius: "20px", padding: "6px 14px", fontSize: "13px", fontWeight: 600, color: "#1F60A0", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+                    ✓ {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div style={{ background: "#fff", borderRadius: "24px", padding: "36px", boxShadow: "0 20px 60px rgba(31, 96, 160, 0.08)", border: "1px solid rgba(31, 96, 160, 0.1)" }}>
+                <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "#0d1b2a", marginBottom: "24px" }}>Types of QR Codes You Can Create</h3>
+                <div className="row g-3">
+                  {[
+                    { icon: <BsGlobe />, label: "Website URL", sub: "Link any webpage", tabKey: "website" },
+                    { icon: <BsPersonFill />, label: "vCard / Contact", sub: "Digital business card", tabKey: "vcard" },
+                    { icon: <BsWifi />, label: "WiFi Access", sub: "Share network details", tabKey: "wifi" },
+                    { icon: <BsWhatsapp />, label: "WhatsApp Chat", sub: "Instant messaging", tabKey: "whatsapp" },
+                    { icon: <BsEnvelopeFill />, label: "Email Draft", sub: "Pre-filled email", tabKey: "email" },
+                    { icon: <BsChatLeftTextFill />, label: "SMS Message", sub: "Text with a scan", tabKey: "sms" },
+                    { icon: <BsType />, label: "Plain Text", sub: "Store any text data", tabKey: "text" },
+                  ].map((item) => (
+                    <div className="col-12 col-md-6" key={item.label}>
+                      <a href="#QR_Main"
+                        onClick={() => setActiveTab(item.tabKey)}
+                        style={{ textDecoration: "none", color: "inherit", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", background: "#ffffff", borderRadius: "16px", padding: "12px 14px", border: "1.5px solid rgba(31, 96, 160, 0.08)", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(0,0,0,0.02)", height: "100%" }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(31, 96, 160, 0.1)"; e.currentTarget.style.borderColor = "rgba(31, 96, 160, 0.2)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.02)"; e.currentTarget.style.borderColor = "rgba(31, 96, 160, 0.08)"; }}
+                      >
+                        <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: "linear-gradient(135deg, #1F60A0 0%, #3e81c1 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", color: "#fff", flexShrink: 0, boxShadow: "0 4px 10px rgba(31, 96, 160, 0.2)" }}>
+                          {item.icon}
+                        </div>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontSize: "14px", fontWeight: 700, color: "#0d1b2a", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</div>
+                          <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.sub}</div>
+                        </div>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+          SECTION: How QR Codes Work
+      ═══════════════════════════════════════════════════ */}
+      <div id="how-qr-codes-work" style={{ background: "#ffffff", padding: "80px 0" }}>
+        <div className="container">
+          <div className="text-center mb-5">
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(31, 96, 160, 0.1)", borderRadius: "30px", padding: "6px 18px", marginBottom: "20px" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#1F60A0", display: "inline-block", boxShadow: "0 0 6px rgba(31, 96, 160, 0.5)" }}></span>
+              <span style={{ fontSize: "13px", fontWeight: 600, color: "#1F60A0", letterSpacing: "0.5px", textTransform: "uppercase" }}>The Technology</span>
+            </div>
+            <h2 style={{ fontSize: "2.2rem", fontWeight: 800, color: "#0d1b2a", marginBottom: "16px" }}>How QR Codes Work</h2>
+            <p style={{ fontSize: "1.05rem", color: "#475569", maxWidth: "680px", margin: "0 auto", lineHeight: 1.8 }}>
+              Understanding the technology behind QR codes helps you use them more effectively. Here is a step-by-step breakdown of how data is encoded and decoded.
+            </p>
+          </div>
+
+          {/* Timeline steps */}
+          <div className="row g-4 mb-5">
+            {[
+              {
+                step: "01",
+                title: "Data Encoding",
+                icon: <BsCpu />,
+                desc: "When you generate a QR code, your input (URL, text, WiFi) is converted into a binary string using one of four encoding modes: Numeric, Alphanumeric, Binary/Byte, or Kanji. The encoding mode chosen depends on the type of characters in your data.",
+              },
+              {
+                step: "02",
+                title: "Error Correction",
+                icon: <BsShieldLock />,
+                desc: "QR codes use Reed-Solomon error correction, meaning even if up to 30% of the code is damaged, obscured, or dirty, the scanner can still read and reconstruct the original data. TheQRIFY uses Level H (Highest) error correction by default.",
+              },
+              {
+                step: "03",
+                title: "Matrix Construction",
+                icon: <BsGrid3X3 />,
+                desc: "The encoded binary data is arranged into the iconic square grid of dark and light modules (pixels). Special finder patterns in the three corners help scanners detect the QR code's position and orientation instantly, regardless of angle.",
+              },
+              {
+                step: "04",
+                title: "Scanning & Decoding",
+                icon: <BsQrCodeScan />,
+                desc: "When a smartphone camera points at a QR code, the camera app detects the finder patterns, corrects perspective distortion, samples each module, reverses the encoding process, and presents the decoded information — all in under half a second.",
+              },
+            ].map((item) => (
+              <div className="col-md-6" key={item.step}>
+                <div style={{ background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)", borderRadius: "20px", padding: "28px", height: "100%", border: "1.5px solid rgba(31, 96, 160, 0.1)", position: "relative", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+                  <div style={{ position: "absolute", top: "16px", right: "20px", fontSize: "48px", opacity: 0.06, fontWeight: 900, color: "#1F60A0", fontFamily: "monospace" }}>{item.step}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px", position: "relative", zIndex: 2 }}>
+                    <div style={{ background: "linear-gradient(135deg, #1F60A0 0%, #3e81c1 100%)", borderRadius: "12px", width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", color: "#ffffff", flexShrink: 0, boxShadow: "0 4px 12px rgba(31, 96, 160, 0.3)" }}>
+                      {item.icon}
+                    </div>
+                    <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#0d1b2a", margin: 0 }}>{item.title}</h3>
+                  </div>
+                  <p style={{ fontSize: "0.95rem", color: "#475569", lineHeight: 1.75, margin: 0, position: "relative", zIndex: 2 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Anatomy callout */}
+          <div style={{ background: "linear-gradient(135deg, #1F60A0 0%, #1F60A0 100%)", borderRadius: "24px", padding: "36px 40px", color: "#fff", border: "1px solid rgba(31, 96, 160, 0.2)", boxShadow: "0 16px 40px rgba(31, 96, 160, 0.15)" }}>
+            <h3 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "8px", color: "#ffffff" }}>Did You Know?</h3>
+            <p style={{ fontSize: "1rem", color: "#cbd5e1", lineHeight: 1.8, marginBottom: 0 }}>
+              A QR code invented in 1994 can now connect a printed poster on a café wall to a live table-booking form, a product package label to a playlist, or a business card to a complete digital portfolio — all without a single typed letter. The QR code bridges the physical and digital worlds in less than a second, and <strong style={{ color: "#fff" }}>TheQRIFY</strong> puts that power in your hands for free.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+          SECTION: Benefits of QR Codes
+      ═══════════════════════════════════════════════════ */}
+      <div id="benefits-of-qr-codes" style={{ background: "linear-gradient(135deg, #ECF7FF 0%, #ECF7FF 100%)", padding: "80px 0" }}>
+        <div className="container">
+          <div className="text-center mb-5">
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(31, 96, 160, 0.1)", borderRadius: "30px", padding: "6px 18px", marginBottom: "20px" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#1F60A0", display: "inline-block", boxShadow: "0 0 6px rgba(31, 96, 160, 0.5)" }}></span>
+              <span style={{ fontSize: "13px", fontWeight: 600, color: "#1F60A0", letterSpacing: "0.5px", textTransform: "uppercase" }}>Why Use QR Codes</span>
+            </div>
+            <h2 style={{ fontSize: "2.2rem", fontWeight: 800, color: "#0d1b2a", marginBottom: "16px" }}>Benefits of Using QR Codes</h2>
+            <p style={{ fontSize: "1.05rem", color: "#475569", maxWidth: "680px", margin: "0 auto", lineHeight: 1.8 }}>
+              QR codes are one of the most versatile and cost-effective tools available to businesses, marketers, educators, and individuals today. Here's why millions of people generate QR codes every day.
+            </p>
+          </div>
+
+          <div className="row g-4">
+            {[
+              {
+                icon: <BsLightningChargeFill />,
+                title: "Instant, Contactless Sharing",
+                desc: "Share menus, price lists, portfolios, app download links, WiFi passwords, or full documents with a single scan. No typing, no delays — just point, scan, and access.",
+              },
+              {
+                icon: <BsGraphUpArrow />,
+                title: "Powerful Marketing Tool",
+                desc: "QR codes dramatically increase the ROI of print marketing. Add them to flyers, billboards, packaging, and business cards to instantly bridge the gap between offline and online.",
+              },
+              {
+                icon: <BsCreditCardFill />,
+                title: "Frictionless Payments",
+                desc: "QR-based payment systems (UPI, PayPal, Stripe) have replaced cash registers in millions of businesses. Customers simply scan and pay — reducing queues and hardware costs.",
+              },
+              {
+                icon: <BsRecycle />,
+                title: "Eco-Friendly & Cost-Saving",
+                desc: "Digital menus, catalogues, and brochures delivered via QR code eliminate printing costs and paper waste. Enabling real-time updates without reprinting saves thousands.",
+              },
+              {
+                icon: <BsShieldLockFill />,
+                title: "Secure & Reliable",
+                desc: "QR codes use Reed-Solomon error correction so they remain scannable even when partially damaged or obscured. They simply link to your chosen destination, keeping data safe.",
+              },
+              {
+                icon: <BsBarChartFill />,
+                title: "Trackable Campaign Analytics",
+                desc: "Dynamic QR codes let you track every scan — including device type, time, location, and frequency. Use this data to optimise your campaigns and measure real-world engagement.",
+              },
+              {
+                icon: <BsPaletteFill />,
+                title: "Highly Customisable",
+                desc: "Modern QR codes are far from boring black-and-white squares. With TheQRIFY you can change colours, add your brand logo, choose styled frames, and maintain full scannability.",
+              },
+              {
+                icon: <BsPhoneFill />,
+                title: "Works on Every Device",
+                desc: "No app required. Every modern iPhone and Android phone can scan a QR code directly from the native camera app. This universal compatibility means anyone can access your content.",
+              },
+            ].map((benefit) => (
+              <div className="col-md-6 col-lg-3" key={benefit.title}>
+                <div style={{ background: "#ffffff", borderRadius: "20px", padding: "32px 24px", height: "100%", boxShadow: "0 4px 20px rgba(31, 96, 160, 0.04)", border: "1.5px solid rgba(31, 96, 160, 0.08)", transition: "all 0.3s ease" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 15px 35px rgba(31, 96, 160, 0.12)"; e.currentTarget.style.borderColor = "rgba(31, 96, 160, 0.25)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(31, 96, 160, 0.04)"; e.currentTarget.style.borderColor = "rgba(31, 96, 160, 0.08)"; }}
+                >
+                  <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "52px", height: "52px", borderRadius: "14px", background: "linear-gradient(135deg, #1F60A0 0%, #3e81c1 100%)", fontSize: "22px", color: "#fff", marginBottom: "20px", boxShadow: "0 4px 12px rgba(31, 96, 160, 0.2)" }}>
+                    {benefit.icon}
+                  </div>
+                  <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#0d1b2a", marginBottom: "10px" }}>{benefit.title}</h3>
+                  <p style={{ fontSize: "0.88rem", color: "#64748b", lineHeight: 1.7, margin: 0 }}>{benefit.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════
+          SECTION: Use Cases
+      ═══════════════════════════════════════════════════ */}
+      <div id="qr-code-use-cases" style={{ background: "#ffffff", padding: "80px 0" }}>
+        <div className="container">
+          <div className="text-center mb-5">
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(31, 96, 160, 0.15)", borderRadius: "30px", padding: "6px 18px", marginBottom: "20px" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#1F60A0", display: "inline-block", boxShadow: "0 0 6px rgba(31, 96, 160, 0.5)" }}></span>
+              <span style={{ fontSize: "13px", fontWeight: 600, color: "#1F60A0", letterSpacing: "0.5px", textTransform: "uppercase" }}>Real-World Applications</span>
+            </div>
+            <h2 style={{ fontSize: "2.2rem", fontWeight: 800, color: "#0d1b2a", marginBottom: "16px" }}>QR Code Use Cases</h2>
+            <p style={{ fontSize: "1.05rem", color: "#475569", maxWidth: "680px", margin: "0 auto", lineHeight: 1.8 }}>
+              From cafés to corporations, QR codes are transforming how businesses and individuals share information. Explore the most popular real-world applications.
+            </p>
+          </div>
+
+          <div className="row g-4">
+            {[
+              {
+                category: "Restaurants & Food",
+                icon: <FaUtensils />,
+                cases: [
+                  "Digital menus — update prices without reprinting",
+                  "Table ordering systems for faster service",
+                  "Allergen & nutritional information pages",
+                  "Loyalty reward programme check-ins",
+                  "Online review collection (Google, Yelp)",
+                ],
+              },
+              {
+                category: "Retail & E-commerce",
+                icon: <BsBagFill />,
+                cases: [
+                  "Product detail & sizing guide pages",
+                  "Instant reorder / add-to-cart links",
+                  "In-store promotions and discount codes",
+                  "Unboxing experience & warranty registration",
+                  "Omnichannel loyalty programmes",
+                ],
+              },
+              {
+                category: "Business & Networking",
+                icon: <BsBriefcaseFill />,
+                cases: [
+                  "Digital business cards (vCard QR codes)",
+                  "Conference & event badge check-in",
+                  "Company brochure & portfolio links",
+                  "Employee onboarding document packs",
+                  "Office WiFi sharing without revealing passwords",
+                ],
+              },
+              {
+                category: "Marketing & Advertising",
+                icon: <FaBullhorn />,
+                cases: [
+                  "Billboard & print-to-digital campaigns",
+                  "YouTube / social media profile links",
+                  "Promo landing pages for TV adverts",
+                  "Packaging competitions & sweepstakes",
+                  "Influencer trackable campaign links",
+                ],
+              },
+              {
+                category: "Education & Healthcare",
+                icon: <FaGraduationCap />,
+                cases: [
+                  "Classroom resource & reading list links",
+                  "Assignment submission portals",
+                  "Patient intake forms & symptom checkers",
+                  "Medication instructions & pharmacy info",
+                  "Museum & gallery interactive audio guides",
+                ],
+              },
+              {
+                category: "Events & Entertainment",
+                icon: <FaTicketAlt />,
+                cases: [
+                  "Ticket validation & e-guestlist check-in",
+                  "Wedding RSVP forms & photo albums",
+                  "Live poll & audience Q&A links",
+                  "Event programme & speaker schedule",
+                  "Charity donation & fundraising pages",
+                ],
+              },
+            ].map((uc) => (
+              <div className="col-md-6 col-lg-4" key={uc.category}>
+                <div style={{ background: "linear-gradient(135deg, #ffffff 0%, #f4f8fc 100%)", borderRadius: "20px", padding: "32px 28px", height: "100%", border: "1.5px solid rgba(31, 96, 160, 0.12)", boxShadow: "0 8px 24px rgba(31, 96, 160, 0.04)", transition: "all 0.3s ease" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 15px 35px rgba(31, 96, 160, 0.1)"; e.currentTarget.style.borderColor = "rgba(1, 95, 158, 0.25)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(31, 96, 160, 0.04)"; e.currentTarget.style.borderColor = "rgba(31, 96, 160, 0.12)"; }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "22px" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "42px", height: "42px", background: "linear-gradient(135deg, #1F60A0 0%, #3e81c1 100%)", borderRadius: "10px", fontSize: "20px", color: "#fff", boxShadow: "0 4px 10px rgba(31, 96, 160, 0.2)", flexShrink: 0 }}>{uc.icon}</div>
+                    <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "#0d1b2a", margin: 0 }}>{uc.category}</h3>
+                  </div>
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                    {uc.cases.map((c) => (
+                      <li key={c} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.88rem", color: "#475569", lineHeight: 1.65, marginBottom: "8px" }}>
+                        <span style={{ color: "#1F60A0", fontWeight: 700, fontSize: "15px", flexShrink: 0, marginTop: "1px" }}>→</span>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Banner */}
+          <div className="text-center mt-5">
+            <div style={{ background: "linear-gradient(135deg, #1F60A0 0%, #1F60A0 100%)", borderRadius: "24px", padding: "48px 32px", color: "#fff", boxShadow: "0 16px 40px rgba(31, 96, 160, 0.25)" }}>
+              <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: "12px" }}>Ready to Create Your QR Code?</h2>
+              <p style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.85)", marginBottom: "28px", maxWidth: "560px", margin: "0 auto 28px" }}>
+                Join thousands of businesses and creators. Generate your first free, customised QR code in under 30 seconds — no account required.
+              </p>
+              <a href="#QR_Main" style={{ display: "inline-block", background: "#fff", color: "#1F60A0", fontWeight: 700, padding: "14px 36px", borderRadius: "50px", textDecoration: "none", fontSize: "1rem", boxShadow: "0 4px 20px rgba(0,0,0,0.15)", transition: "transform 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+              >
+                Generate Free QR Code Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Everything you need to know to get started */}
-      <div className="bg-white mb-5">
+      <div className="bg-white mb-5" >
         <div className="container">
           <div className="row justify-content-center button_4_Bg text-center py-3 mb-3" id="FAQ">
             <div className="col-md-12">
@@ -3241,9 +2774,11 @@ const QRGenerator = () => {
             <div className="col-md-5 mb-3 img_10_png">
               <img
                 src={img_10}
-                alt="QR Code"
+                alt="Getting started with QR Codes"
                 className="img-fluid"
                 loading="lazy"
+                width="386"
+                height="519"
               />
             </div>
             <div className="col-md-4 FaQ_Slider">
@@ -3398,7 +2933,7 @@ const QRGenerator = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
       {/* <div className="container py-5 mb-5">
         <div className="row justify-content-center g-4">
           <div className="col-md-4">
@@ -3481,7 +3016,7 @@ const QRGenerator = () => {
           </div>
         </div>
       </div> */}
-      <div className="bg-white">
+      < div className="bg-white" >
         <div className="container py-5">
           <div className="row py-5 button_4_Bg" id="FaQ1">
             <div className="col-md-12 text-center">
@@ -3851,16 +3386,18 @@ const QRGenerator = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-2"></div>
           <div className="col-md-4 py-5">
             <img
               src={img_11}
-              alt="QR Code"
+              alt="QR Code customization options"
               className="QR_12"
               loading="lazy"
+              width="386"
+              height="386"
             />
           </div>
 
@@ -3890,6 +3427,7 @@ const QRGenerator = () => {
           </div>
         </div>
       </div>
+      <ExploreAllGenerators />
       {/* Footer */}
       <footer className="w-100 text-white Buton_3_BG" >
         <div className="container py-5 d-flex flex-column align-items-center">
@@ -3901,6 +3439,8 @@ const QRGenerator = () => {
                 loading="lazy"
                 width={120}
                 height={55}
+                sizes="120px"
+                srcSet={`${logo1} 120w`}
                 style={{ objectFit: "contain" }}
               />
             </a>
@@ -3920,7 +3460,7 @@ const QRGenerator = () => {
             >
               TheQRIFY
             </a>
-            ©2025. All rights reserved.
+            ©2026. All rights reserved.
           </div>
         </div>
       </footer>

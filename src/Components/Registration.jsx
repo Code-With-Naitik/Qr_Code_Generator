@@ -5,7 +5,7 @@ import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import qr_image from "../assets/qr_image.png";
+import qr_image from "../assets/qr_image.webp";
 
 
 export default function Registration() {

@@ -71,25 +71,19 @@
   <!-- ✅ Fonts (optimized loading) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- <link rel="preload" href="/assets/index-D7Ldze5v.css" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" as="style"
-    onload="this.onload=null;this.rel='stylesheet'" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    as="style" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet" />
   </noscript>
-  <!-- <link rel="preload" href="/assets/index-Cwyly-KD.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/assets/index-Cwyly-KD.css">
-  </noscript> -->
 
   <!-- ✅ Preconnect for faster CDN -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-  <!-- ✅ Non-blocking App CSS -->
-  <link rel="preload" href="/assets/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript>
-    <link rel="stylesheet" href="/assets/index.css" />
-  </noscript>
 
   <!-- Google tag (gtag.js) -->
   <!-- <script
@@ -104,33 +98,36 @@
       gtag("js", new Date());
       gtag("config", "G-SXM06X9478", { debug_mode: true });
     </script> -->
-  <!-- <script>
-      let gaLoaded = false;
+  <script>
+    let gaLoaded = false;
 
-      function loadGA() {
-        if (gaLoaded) return;
-        gaLoaded = true;
+    function loadGA() {
+      if (gaLoaded) return;
+      gaLoaded = true;
 
-        const script = document.createElement("script");
-        script.src = "https://www.googletagmanager.com/gtag/js?id=G-SXM06X9478";
-        script.async = true;
-        document.head.appendChild(script);
+      const script = document.createElement("script");
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-SXM06X9478";
+      script.async = true;
+      document.head.appendChild(script);
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        window.gtag = gtag;
-
-        gtag("js", new Date());
-        gtag("config", "G-SXM06X9478");
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
+      window.gtag = gtag;
 
-      ["click", "scroll", "mousemove", "touchstart"].forEach((event) => {
-        window.addEventListener(event, loadGA, { once: true });
-      });
-    </script> -->
+      gtag("js", new Date());
+      gtag("config", "G-SXM06X9478");
+    }
 
+    ["click", "scroll", "mousemove", "touchstart"].forEach((event) => {
+      window.addEventListener(event, loadGA, { once: true });
+    });
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6578481292412955"
+    crossorigin="anonymous"></script>
   <!-- ✅ Non-blocking Bootstrap CSS -->
   <!-- <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style"
     onload="this.onload=null;this.rel='stylesheet'">

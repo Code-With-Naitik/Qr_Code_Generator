@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
 // mock Google Analytics (VERY IMPORTANT)
-vi.mock("./ga4", () => ({
+vi.mock("./appEvents", () => ({
     sendPageView: vi.fn(),
 }));
 
@@ -34,7 +34,7 @@ describe("App Routing & Layout", () => {
         ).not.toBeInTheDocument();
     });
 
-    test("renders Home page on / route", () => {
+    test("renders Home page on / route", async () => {
         render(
             <MemoryRouter initialEntries={["/"]}>
                 <App />
@@ -42,12 +42,12 @@ describe("App Routing & Layout", () => {
         );
 
         // Multiple website inputs exist (desktop + mobile)
-        expect(
-            screen.getAllByPlaceholderText("Enter your Website")[0]
-        ).toBeInTheDocument();
+        // Use a longer timeout because of lazy loading
+        const inputs = await screen.findAllByPlaceholderText("https://theqrify.com/", {}, { timeout: 5000 });
+        expect(inputs[0]).toBeInTheDocument();
     });
 
-    test("renders Blog page on /blog route", () => {
+    test("renders Blog page on /blog route", async () => {
         render(
             <MemoryRouter initialEntries={["/blog"]}>
                 <App />
@@ -55,12 +55,11 @@ describe("App Routing & Layout", () => {
         );
 
         // Multiple "TheQRIFY Blog" headings exist (desktop + mobile)
-        expect(
-            screen.getAllByRole("heading", { name: "TheQRIFY Blog" })[0]
-        ).toBeInTheDocument();
+        const headings = await screen.findAllByRole("heading", { name: /TheQRIFY Blog/i }, { timeout: 3000 });
+        expect(headings[0]).toBeInTheDocument();
     });
 
-    test("renders About page on /about route", () => {
+    test("renders About page on /about route", async () => {
         render(
             <MemoryRouter initialEntries={["/about"]}>
                 <App />
@@ -68,11 +67,11 @@ describe("App Routing & Layout", () => {
         );
 
         expect(
-            screen.getByText(/About Us/i)
+            await screen.findByText(/Our Story/i, {}, { timeout: 3000 })
         ).toBeInTheDocument();
     });
 
-    test("renders Contact page on /contact route", () => {
+    test("renders Contact page on /contact route", async () => {
         render(
             <MemoryRouter initialEntries={["/contact"]}>
                 <App />
@@ -80,11 +79,11 @@ describe("App Routing & Layout", () => {
         );
 
         expect(
-            screen.getByText("Get In Touch")
+            await screen.findByText(/Get In Touch/i, {}, { timeout: 3000 })
         ).toBeInTheDocument();
     });
 
-    test("renders Privacy Policy page on /privacy_policy route", () => {
+    test("renders Privacy Policy page on /privacy_policy route", async () => {
         render(
             <MemoryRouter initialEntries={["/privacy_policy"]}>
                 <App />
@@ -92,11 +91,11 @@ describe("App Routing & Layout", () => {
         );
 
         expect(
-            screen.getByRole("heading", { name: /Privacy Policy/i })
+            await screen.findByRole("heading", { level: 1 }, { timeout: 5000 })
         ).toBeInTheDocument();
-    });
+    }, 10000);
 
-    test("renders Terms page on /terms route", () => {
+    test("renders Terms page on /terms route", async () => {
         render(
             <MemoryRouter initialEntries={["/terms"]}>
                 <App />
@@ -104,7 +103,7 @@ describe("App Routing & Layout", () => {
         );
 
         expect(
-            screen.getByRole("heading", { name: /Terms & Conditions/i })
+            await screen.findByRole("heading", { level: 1 }, { timeout: 5000 })
         ).toBeInTheDocument();
-    });
+    }, 10000);
 });

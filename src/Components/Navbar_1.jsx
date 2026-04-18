@@ -2,7 +2,8 @@
 import React from "react";
 import { FaQrcode } from "react-icons/fa";
 // import { Link } from "react-bootstrap-icons";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
+// import "../css/Navbar.scss";
 
 const Navbar = () => {
   return (

@@ -6,14 +6,14 @@ describe("Home Page (QR Generator)", () => {
         render(<HomePage />);
 
         expect(
-            screen.getAllByPlaceholderText("Enter your Website")[0]
+            screen.getAllByPlaceholderText("https://theqrify.com/")[0]
         ).toBeInTheDocument();
     });
 
     test("allows user to type website URL", () => {
         render(<HomePage />);
 
-        const input = screen.getAllByPlaceholderText("Enter your Website")[0];
+        const input = screen.getAllByPlaceholderText("https://theqrify.com/")[0];
         fireEvent.change(input, {
             target: { value: "https://google.com" },
         });
@@ -58,7 +58,7 @@ describe("Home Page (QR Generator)", () => {
     test("generates QR code when user enters website URL", () => {
         render(<HomePage />);
 
-        const input = screen.getAllByPlaceholderText("Enter your Website")[0];
+        const input = screen.getAllByPlaceholderText("https://theqrify.com/")[0];
         fireEvent.change(input, {
             target: { value: "https://example.com" },
         });

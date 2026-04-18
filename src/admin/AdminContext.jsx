@@ -83,7 +83,12 @@ export function AdminProvider({ children }) {
 
     const addQrCode = (qr) => {
         const newQr = { ...qr, id: Date.now(), createdAt: new Date().toISOString().split("T")[0], scans: 0 };
-        setQrCodes(prev => [newQr, ...prev]);
+        setQrCodes(prev => {
+            // Prevent duplicates using live state
+            const exists = prev.some(q => q.value === newQr.value && q.type === newQr.type);
+            if (exists) return prev;
+            return [newQr, ...prev];
+        });
         return newQr;
     };
 

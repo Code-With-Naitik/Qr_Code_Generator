@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import Icons from 'unplugin-icons/vite';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
+import compression from 'vite-plugin-compression';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   plugins: [
@@ -13,10 +15,25 @@ export default defineConfig({
         custom: FileSystemIconLoader('./src/assets/icons'),
       },
     }),
+    compression({
+      algorithm: 'gzip',
+      ext: '.gz',
+    }),
+    compression({
+      algorithm: 'brotliCompress',
+      ext: '.br',
+    }),
+    visualizer({
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    }),
   ],
-  base: '/',
+  base: './',
   server: {
     historyApiFallback: true,
+    host: "0.0.0.0",
+    port: 5173,
   },
 
   build: {

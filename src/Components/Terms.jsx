@@ -1,30 +1,17 @@
 // File: TermsConditionsTheQrify.jsx
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function TermsConditionsTheQrify({ effectiveDate = new Date().toISOString().slice(0, 10) }) {
   // inject Bootstrap & font only once
-  useEffect(() => {
-    const addLink = (href, id) => {
-      if (document.getElementById(id)) return;
-      const l = document.createElement("link");
-      l.rel = "stylesheet";
-      l.href = href;
-      l.id = id;
-      document.head.appendChild(l);
-    };
 
-    addLink("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", "bs5-theqrify-terms");
-    addLink("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap", "inter-theqrify-terms");
-  }, []);
 
   const style = {
-    fontFamily: `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`,
     color: "#0f172a",
   };
 
   return (
     <div style={{ background: "#fff", minHeight: "100vh" }}>
-      <main style={style}>
+      <div style={style}>
         <div className="container" style={{ maxWidth: 1000 }}>
           {/* Header */}
           <header className="py-5 text-center">
@@ -202,7 +189,7 @@ export default function TermsConditionsTheQrify({ effectiveDate = new Date().toI
 
             <p className="small text-muted">© {new Date().getFullYear()} TheQrify — All Rights Reserved.</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
