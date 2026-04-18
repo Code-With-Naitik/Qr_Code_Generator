@@ -29,7 +29,7 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
-  base: './',
+  base: '/',
   server: {
     historyApiFallback: true,
     host: "0.0.0.0",
