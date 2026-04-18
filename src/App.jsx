@@ -266,8 +266,7 @@ function App() {
             </Routes>
           </Suspense>
         </AdminProvider>
-        {/* <Footer /> */}
-      </main>
+        </main>
 
 
       {/* <Navbar_1 /> */}

@@ -151,7 +151,8 @@ const QRGenerator = () => {
     [password, setPassword] = useState(""),
     [encryption, setEncryption] = useState("WPA"),
     [hidden, setHidden] = useState(false),
-    [loading, setLoading] = useState(false);
+    [loading, setLoading] = useState(false),
+    [savedToast, setSavedToast] = useState(false);
 
   // 09-01//
   const qrRef = useRef(null);
@@ -1376,6 +1377,10 @@ const QRGenerator = () => {
         fgColor: qrColor,
         bgColor: bgColor
       });
+
+      // Show success toast
+      setSavedToast(true);
+      setTimeout(() => setSavedToast(false), 3000);
     }
   };
 
@@ -1420,6 +1425,30 @@ const QRGenerator = () => {
 
   return (
     <>
+      {/* ✅ Admin Save Toast */}
+      {savedToast && (
+        <div style={{
+          position: "fixed",
+          bottom: "24px",
+          right: "24px",
+          zIndex: 9999,
+          background: "linear-gradient(135deg, #10b981, #059669)",
+          color: "#fff",
+          padding: "12px 20px",
+          borderRadius: "12px",
+          boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          fontSize: "14px",
+          fontWeight: 600,
+          animation: "slideInRight 0.3s ease",
+        }}>
+          <span style={{ fontSize: "18px" }}>✅</span>
+          <span>QR saved to Admin Dashboard!</span>
+          <a href="/admin/qr-codes" style={{ color: "#d1fae5", textDecoration: "underline", marginLeft: 4 }}>View</a>
+        </div>
+      )}
       <div className="Buton_2_BG bg-light" id="QR_Main">
         {/* DESKTOP / LAPTOP (md and up) */}
         <Container className="Buton_1_BG d-none d-md-block">

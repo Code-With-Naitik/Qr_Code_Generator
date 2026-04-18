@@ -82,13 +82,15 @@ export function AdminProvider({ children }) {
     };
 
     const addQrCode = (qr) => {
-        const newQr = { ...qr, id: Date.now(), createdAt: new Date().toISOString().split("T")[0], scans: 0 };
-        setQrCodes(prev => {
-            // Prevent duplicates using live state
-            const exists = prev.some(q => q.value === newQr.value && q.type === newQr.type);
-            if (exists) return prev;
-            return [newQr, ...prev];
-        });
+        // Use Date.now() + random suffix to guarantee unique IDs
+        const newQr = {
+            ...qr,
+            id: Date.now() + Math.floor(Math.random() * 1000),
+            createdAt: new Date().toISOString().split("T")[0],
+            scans: 0,
+            status: qr.status || "active",
+        };
+        setQrCodes(prev => [newQr, ...prev]);
         return newQr;
     };
 
